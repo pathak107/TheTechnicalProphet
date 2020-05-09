@@ -1,0 +1,64 @@
+<%- include('./partials/header'); -%>
+<script src="https://cdn.tiny.cloud/1/fb4lkxg3ebdu4y8ewh89re9pjezufg6lexmb3a7srr8ukslu/tinymce/5/tinymce.min.js" referrerpolicy="origin">
+</script>
+<script>
+    tinymce.init({
+      selector: '#posttextEditor',
+      toolbar_mode: 'floating',
+    });
+  </script>
+  
+<section class="ftco-section contact-section">
+    <div class="container">
+        <h1>Add New Post</h1>
+        <form action="/newPost" method="POST" class="bg-light p-4 p-md-5 contact-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" name="title" class="form-control" placeholder="Title" required>
+            </div>
+            <br>
+            <!-- short description -->
+            <div class="form-group">
+                <label for="description">Short Description. Generally the first paragraph. This is the text which will be dipslayed as insight and the viewers will then click on READ MORE button to read complete post</label>
+                <textarea id="" name="description" cols="30" rows="5" class="form-control" placeholder="Short Description" required></textarea>
+            </div><br>
+
+            <!-- time to Read -->
+            <div class="form-group">
+                <label for="timeToRead">Specify the average time it will take to read this article. Time should be specified in minutes in number format.</label>
+                <input type="number" name="timeToRead" class="form-control" placeholder="Time to read" required>
+            </div><br>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category">Specify the Category this articles belongs to.</label>
+                <input type="text" name="category" class="form-control" placeholder="Category" required>
+            </div><br>
+
+            <!-- Body of the post -->
+            <div class="form-group">
+                <label for="posttextEditor">Note: Make sure the images you add in your post are hosted on the internet somewhere and not on your local machine. Remember if the photos are on your local machine then they will not show up in the final post.</label>
+                <textarea name="postBody" id="posttextEditor" cols="30" rows="30" class="form-control"
+                    placeholder="Body of the Article" ></textarea>
+            </div>
+
+            <!-- Photo for the article -->
+            <div class="form-group">
+                <label for="photo">Choose a Photo for the Article. This is the main photo which will be used to display your post.</label>
+                <input type="file" name="img"  accept="image/*" required>
+            </div><br>
+
+            <!-- author and about author -->
+            <div class="form-group">
+                <input type="text" name="author" class="form-control" placeholder="Author's Name" required>
+            </div>
+            <div class="form-group">
+                <textarea id="" name="aboutAuthor" cols="30" rows="5" class="form-control" placeholder="About Author" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add new post" class="btn btn-primary py-3 px-5">
+            </div>
+        </form>
+    </div>
+</section>
+<%- include('./partials/footer'); -%>
