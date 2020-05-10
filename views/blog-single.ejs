@@ -16,19 +16,56 @@
             <!-- Tags and keywords -->
             <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">Life</a>
-                <a href="#" class="tag-cloud-link">Sport</a>
-                <a href="#" class="tag-cloud-link">Tech</a>
-                <a href="#" class="tag-cloud-link">Travel</a>
+                <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link"><%=post.tags[i]%></a>
+                <%}%>
               </div>
             </div>
             
             <div class="about-author d-flex p-4 bg-light">
               <div class="desc">
+                <h3>Author</h3>
                 <h3><%=post.author%></h3>
                 <p><%=post.aboutAuthor%></p>
               </div>
             </div>
+
+
+            <!-- delete button for post -->
+            <%if(isLoggedIn==true){%>
+            <div style="margin-bottom: 2rem;" id="deleteButton" class="btn btn-primary py-3 px-5">Delete Post</div>
+            <script>
+                document.getElementById("deleteButton").addEventListener("click", () => {
+                    $.ajax({
+                        url: '/articles/<%=post._id%>',
+                        type: 'DELETE',
+                        success: function (result) {
+                            console.log(result);
+                            $("#deleteButton").text(result.message);
+                            if (result.message == "success") {
+                                window.location.href = "/";
+                            }
+
+                        }
+                    });
+                });
+            </script>
+            <%}%>
+
+            <!-- recent posts -->
+            <h1>Related Posts</h1>
+            <% for(var i=0;i< recentPosts.length;i++){ %>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="/articles/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
+                  <div class="meta">
+                    <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span> <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
+                    <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
+                  </div>
+                </div>
+              </div>
+              <%}%>
 
 
             <div class="pt-5 mt-5">
@@ -45,6 +82,28 @@
                     <p><%=comments[i].email%></p>
                     <div class="meta mb-3"><%=new Date(comments[i].timestamp).toUTCString().slice(0,16)%> at <%=new Date(comments[i].timestamp).toUTCString().slice(17,22)%>hrs</div>
                     <p><%=comments[i].comment%></p>
+
+                    <!-- delete comment -->
+                    <%if(isLoggedIn==true){%>
+                    <div id="deleteButtonComment" class="btn btn-primary py-3 px-5">Delete Comment</div>
+                    <script>
+                      document.getElementById("deleteButtonComment").addEventListener("click", () => {
+                          $.ajax({
+                              url: '/articles/comment/<%=comments[i]._id%>',
+                              type: 'DELETE',
+                              success: function (result) {
+                                  console.log(result);
+                                  $("#deleteButtonComment").text(result.message);
+                                  if (result.message == "success") {
+                                      window.location.href = "/articles/<%=post._id%>";
+                                  }
+      
+                              }
+                          });
+                      });
+                  </script>
+                  <%}%>
+
                     
                   </div>
                 </li>
@@ -78,14 +137,6 @@
 
           </div> <!-- .col-md-8 -->
           <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
-            <div class="sidebar-box">
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <span class="icon icon-search"></span>
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                </div>
-              </form>
-            </div>
 
             <!-- <div class="sidebar-box ftco-animate">
               <div class="categories">
@@ -119,14 +170,9 @@
             <div class="sidebar-box ftco-animate">
               <h3>Tag Cloud</h3>
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">cat</a>
-                <a href="#" class="tag-cloud-link">abstract</a>
-                <a href="#" class="tag-cloud-link">people</a>
-                <a href="#" class="tag-cloud-link">person</a>
-                <a href="#" class="tag-cloud-link">model</a>
-                <a href="#" class="tag-cloud-link">delicious</a>
-                <a href="#" class="tag-cloud-link">desserts</a>
-                <a href="#" class="tag-cloud-link">drinks</a>
+                <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link"><%=post.tags[i]%></a>
+                <%}%>
               </div>
             </div>
           </div>

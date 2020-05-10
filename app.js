@@ -38,6 +38,7 @@ const authController = require('./controllers/authController');
 const articleController=require('./controllers/articleController')
 const contactController=require('./controllers/contactController')
 const newPostController=require('./controllers/newPostController')
+const mobileController=require('./controllers/mobileController')
 
 
 
@@ -47,12 +48,11 @@ app.use('/auth', authController);
 app.use('/articles', articleController);
 app.use('/contact', contactController);
 app.use('/newPost', newPostController);
+app.use('/mobile',mobileController)
 // about route
 app.get('/about', function (req, res) {
     res.render('about',{isLoggedIn: req.session.isLoggedIn});
 });
-
-
 
 //404 page
 app.use((req, res) => {

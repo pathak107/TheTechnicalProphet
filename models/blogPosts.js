@@ -8,7 +8,8 @@ var blogPostSchema= new mongoose.Schema({
     author:String,
     aboutAuthor:String,
     shortDescription:String, 
-    imageurl:String
+    imageurl:String,
+    tags:Array,
 });
 module.exports=mongoose.model('blogPost',blogPostSchema);
 

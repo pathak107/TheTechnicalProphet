@@ -1,5 +1,6 @@
 const express = require('express')
 var router = express.Router()
+const fs = require('fs');
 const blogPosts = require('../models/blogPosts')
 const comment = require('../models/comment')
 //Serving static files
@@ -16,8 +17,8 @@ router.get('/', function (req, res) {
         if (err) console.log(err);
         res.render('blog', { isLoggedIn: req.session.isLoggedIn, posts: posts });
     })
-    .select('title timestamp shortDescription imageurl')
-    .sort({timestamp:'desc'});
+        .select('title timestamp shortDescription imageurl')
+        .sort({ timestamp: 'desc' });
 
 })
 
@@ -27,34 +28,31 @@ router.get('/:postID', function (req, res) {
     //get single articles and its comments using id
     blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
         if (err) console.log(err);
-        console.log(post);
 
         //fetching comments of this post
         comment.find({ _postid: req.params.postID }, (err, comments) => {
-            console.log(comments);
-
-
+            
+            
             //fetching recent Blogs
             blogPosts.find((err, recentPosts) => {
                 if (err) console.log(err);
-                console.log(recentPosts);
 
                 //finally rendering the article page
                 res.render('blog-single', {
                     isLoggedIn: req.session.isLoggedIn,
-                    post:post,
-                    comments:comments,
-                    recentPosts:recentPosts
+                    post: post,
+                    comments: comments,
+                    recentPosts: recentPosts
                 });
 
             }).select('title timestamp imageurl')
                 .sort({ timestamp: 'desc' })
                 .limit(3);
 
-        }).sort({timestamp:'desc'})
-        .select('-_postid')
+        }).sort({ timestamp: 'desc' })
+            .select('-_postid')
     })
-        .select('title body author aboutAuthor imageurl')
+        .select('title body author aboutAuthor imageurl tags')
 
 })
 router.post('/:postID', upload.none(), (req, res) => {
@@ -71,5 +69,40 @@ router.post('/:postID', upload.none(), (req, res) => {
         res.redirect('/articles/' + post_id);
     });
 })
+
+router.delete('/:postID', (req, res) => {
+    if (req.session.isLoggedIn == undefined) {
+        return res.redirect('/auth/login');
+    }
+
+    blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
+        if (err) console.log(err)
+        fs.unlink('./public/uploads/' + post.imageurl, function (err) {
+            if (err) console.log(err);
+            // if no error, file has been deleted successfully
+            console.log('File deleted!');
+
+            //delete post
+            blogPosts.deleteOne({ _id: req.params.postID }, (err) => {
+                if (err) console.log(err);
+                res.json({ message: "success" });
+            })
+        });
+    }).select('imageurl');
+});
+
+//deleting comment
+router.delete('/comment/:commentID', (req, res) => {
+    if (req.session.isLoggedIn == undefined) {
+        return res.redirect('/auth/login');
+    }
+    //delete post
+    comment.deleteOne({ _id: req.params.commentID }, (err) => {
+        if (err) console.log(err);
+        console.log("Comment Deleted")
+        res.json({ message: "success" });
+    })
+
+});
 
 module.exports = router
