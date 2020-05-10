@@ -4,10 +4,10 @@ const app = express();
 var session = require('express-session')
 // const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mongoDBStore=require('connect-mongodb-session')(session);
-var store= new mongoDBStore({
-  uri:process.env.MONGO_URL,
-  collection:'sessions'
+const mongoDBStore = require('connect-mongodb-session')(session);
+var store = new mongoDBStore({
+  uri: process.env.MONGO_URL,
+  collection: 'sessions'
 })
 
 
@@ -33,31 +33,35 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store:store,
-  cookie: { secure: false }
+  store: store,
+  unset: 'destroy',
+  cookie: {
+    secure: true,
+    maxAge:60*60*1000
+  }
 }))
 
 
 //importing Controllers
-const rootController=require('./controllers/rootController')
+const rootController = require('./controllers/rootController')
 const authController = require('./controllers/authController');
-const articleController=require('./controllers/articleController')
-const contactController=require('./controllers/contactController')
-const newPostController=require('./controllers/newPostController')
-const mobileController=require('./controllers/mobileController')
+const articleController = require('./controllers/articleController')
+const contactController = require('./controllers/contactController')
+const newPostController = require('./controllers/newPostController')
+const mobileController = require('./controllers/mobileController')
 
 
 
 //handling routes
-app.use('/',rootController)
+app.use('/', rootController)
 app.use('/auth', authController);
 app.use('/articles', articleController);
 app.use('/contact', contactController);
 app.use('/newPost', newPostController);
-app.use('/mobile',mobileController)
+app.use('/mobile', mobileController)
 // about route
 app.get('/about', function (req, res) {
-    res.render('about',{isLoggedIn: req.session.isLoggedIn});
+  res.render('about', { isLoggedIn: req.session.isLoggedIn });
 });
 
 //404 page
@@ -65,7 +69,7 @@ app.use((req, res) => {
   res.send('404 error');
 })
 
-const port=process.env.PORT || 3000
+const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log('Server Started');
 });
