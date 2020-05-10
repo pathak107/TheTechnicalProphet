@@ -64,6 +64,8 @@ app.get('/about', function (req, res) {
 app.use((req, res) => {
   res.send('404 error');
 })
-app.listen(3000 || process.env.PORT, () => {
+
+const port=process.env.PORT || 3000
+app.listen(port, () => {
   console.log('Server Started');
 });

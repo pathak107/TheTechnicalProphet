@@ -34,26 +34,6 @@ router.post('/',upload.single('img'),(req,res)=>{
         res.redirect('/')
     })
 
-
-    //sending mails to existing people
-    // comment.find((err,comments)=>{
-    //     const msg = {
-    //         to: comments.email,
-    //         from: 'istemanipal@gmail.com',
-    //         subject: 'The Technical Prophet | '+req.body.title,
-    //         text: 'The Technical Prophet uploaded a new post. Check now by clicking on the link below',
-    //         html: '<strong>'+req.body.title+'</strong> + <a href="http://blog.istemanipal.com/"></a>',
-    //       };
-    //       sgMail
-    //         .send(msg)
-    //         .then(() => {}, error => {
-    //           console.error(error);
-          
-    //           if (error.response) {
-    //             console.error(error.response.body)
-    //           }
-    //     });
-    // }).select('email')
     
 });
 
