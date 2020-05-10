@@ -4,6 +4,11 @@ const app = express();
 var session = require('express-session')
 // const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const mongoDBStore=require('connect-mongodb-session')(session);
+var store= new mongoDBStore({
+  uri:process.env.MONGO_URL,
+  collection:'sessions'
+})
 
 
 //Serving Static files
@@ -28,6 +33,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store:store,
   cookie: { secure: false }
 }))
 
