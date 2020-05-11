@@ -29,14 +29,14 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 
 //session intialization
+app.set('trust proxy', 1)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: store,
-  unset: 'destroy',
   cookie: {
-    secure: true,
+    secure: false,
     maxAge:60*60*1000
   }
 }))
