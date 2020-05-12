@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
+const https = require('https');
+const fs=require('fs');
 var session = require('express-session')
 // const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -9,6 +11,9 @@ var store = new mongoDBStore({
   uri: process.env.MONGO_URL,
   collection: 'sessions'
 })
+
+const privateKey= fs.readFileSync('blog-istemanipal.com.key');
+const certificate = fs.readFileSync('blog-istemanipal.com.pem')
 
 
 //Serving Static files
@@ -70,7 +75,12 @@ app.use((req, res) => {
   res.send('404 error');
 })
 
-const port = process.env.PORT || 3000
-app.listen(port, () => {
-  console.log('Server Started');
-});
+const port = process.env.PORT || 443
+// app.listen(port, () => {
+//   console.log('Server Started');
+// });
+
+https.createServer({
+  cert:certificate,
+  key:privateKey
+},app).listen(port);
