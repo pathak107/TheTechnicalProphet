@@ -37,7 +37,7 @@ app.use(session({
   store: store,
   cookie: {
     //remeber to set this to true when in production
-    secure: false,
+    secure: true,
     maxAge:60*60*1000
   }
 }))
