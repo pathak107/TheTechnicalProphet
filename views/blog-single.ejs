@@ -55,6 +55,11 @@
         </script>
         <%}%>
 
+        <!-- Edit post button -->
+        <%if(isLoggedIn==true){%>
+          <button style="margin-bottom: 2rem;" class="btn btn-primary py-3 px-5" onclick="window.location.href='/update/<%=post._id%>'">Edit Post</button>
+        <%}%>
+
             <!-- recent posts -->
             <h1>Related Posts</h1>
             <% for(var i=0;i< recentPosts.length;i++){ %>

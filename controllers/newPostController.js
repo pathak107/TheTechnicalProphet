@@ -40,24 +40,25 @@ router.post('/', upload.single('img'), (req, res) => {
         res.redirect('/')
     })
 
-    comment.find((err, comments) => {
-        const msg = {
-            to: comments.email,
-            from: 'istemanipal@gmail.com',
-            subject: 'The Technical Prophet | ' + req.body.title,
-            text: 'The Technical Prophet has uploaded a new post checkout now!',
-            html: '<a href="https://blog-istemanipal.herokuapp.com/" ><strong>' + req.body.title + '</strong></a>',
-        };
-        sgMail
-            .send(msg)
-            .then(() => { }, error => {
-                console.error(error);
+    //// Mailing to all the users who have their emails registered
+    // comment.find((err, comments) => {
+    //     const msg = {
+    //         to: comments.email,
+    //         from: 'istemanipal@gmail.com',
+    //         subject: 'The Technical Prophet | ' + req.body.title,
+    //         text: 'The Technical Prophet has uploaded a new post checkout now!',
+    //         html: '<a href="https://blog-istemanipal.herokuapp.com/" ><strong>' + req.body.title + '</strong></a>',
+    //     };
+    //     sgMail
+    //         .send(msg)
+    //         .then(() => { }, error => {
+    //             console.error(error);
 
-                if (error.response) {
-                    console.error(error.response.body)
-                }
-            });
-    }).select('email');
+    //             if (error.response) {
+    //                 console.error(error.response.body)
+    //             }
+    //         });
+    // }).select('email');
 
 });
 

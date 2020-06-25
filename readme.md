@@ -1,14 +1,13 @@
-#The Technical Prophet is the official blog website of ISTE Manipal student's chapter
+# The Technical Prophet is the official blog website of ISTE Manipal student's chapter
 
-Visit the link https://blog.istemanipal.com 
+# Visit the link https://blog.istemanipal.com 
 
-###The website is made by me and blog posts and contents are handled by content head of our club.
-
+## The website is made by me and blog posts and contents are handled by content head of our club.
 The website uses NodeJs and mongoDB for backend. For the frontend it uses a template by colorlib.
 Website has a login functionality from where admin can add new posts. For adding posts website uses a WYSIWYG editor called quilljs.
 It is fully seo optimized and also uses nodemailer which sends mail to all the registered users.
 
-###Features-
+### Features-
 1. Uses nodejs and mongodb as backend
 1. Ejs templating to serve data to front end from APIs
 1. WYSIWYG editoe
@@ -18,13 +17,14 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 1. Rest API for mobile app of iste to provide information about blog posts in json format.
 1. Uses mongoDB to store sessions
 
-Functionality to add-
+### Functionality to add-
 1. Pagination
 1. Edit blog posts
 1. Count number of views per blog.
 1. Ensure proper working of nodemailer
 1. Removing the main banner from every page except home page.
 1. Implement Quill custom css classes for proper rendering of blog posts.
+1. Set up changes for production environment
 
 Whenever in production mode-
 change http to https and change session's secure parameter to true
