@@ -1,34 +1,42 @@
 <%- include('./partials/header'); -%>
-<script src="https://cdn.tiny.cloud/1/fb4lkxg3ebdu4y8ewh89re9pjezufg6lexmb3a7srr8ukslu/tinymce/5/tinymce.min.js" referrerpolicy="origin">
-</script>
-<script>
-    tinymce.init({
-      selector: '#posttextEditor',
-      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-      toolbar_mode: 'floating',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-    });
-  </script>
-  
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<!-- Theme included stylesheets -->
+<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+
+<!-- WYSIWYG editor Qull initialization -->
+<!-- Create the editor container -->
+
+
+
+
 <section class="ftco-section contact-section">
     <div class="container">
         <h1>Add New Post</h1>
-        <form action="/newPost" method="POST" class="bg-light p-4 p-md-5 contact-form" enctype="multipart/form-data">
+        <form id="myform" action="/newPost" method="POST" class="bg-light p-4 p-md-5 contact-form"
+            enctype="multipart/form-data">
             <div class="form-group">
                 <input type="text" name="title" class="form-control" placeholder="Title" required>
             </div>
             <br>
             <!-- short description -->
             <div class="form-group">
-                <label for="description">Short Description. Generally the first paragraph. This is the text which will be dipslayed as insight and the viewers will then click on READ MORE button to read complete post</label>
-                <textarea id="" name="description" cols="30" rows="5" class="form-control" placeholder="Short Description" required></textarea>
+                <label for="description">Short Description. Generally the first paragraph. This is the text which will
+                    be dipslayed as insight and the viewers will then click on READ MORE button to read complete
+                    post</label>
+                <textarea id="" name="description" cols="30" rows="5" class="form-control"
+                    placeholder="Short Description" required></textarea>
             </div><br>
 
             <!-- time to Read -->
             <div class="form-group">
-                <label for="timeToRead">Specify the average time it will take to read this article. Time should be specified in minutes in number format.</label>
+                <label for="timeToRead">Specify the average time it will take to read this article. Time should be
+                    specified in minutes in number format.</label>
                 <input type="number" name="timeToRead" class="form-control" placeholder="Time to read" required>
             </div><br>
 
@@ -39,22 +47,57 @@
             </div><br>
 
             <!-- Body of the post -->
-            <div class="form-group">
-                <label for="posttextEditor">Note: Make sure the images you add in your post are hosted on the internet somewhere and not on your local machine. Remember if the photos are on your local machine then they will not show up in the final post.</label>
-                <textarea name="postBody" id="posttextEditor" cols="30" rows="30" class="form-control"
-                    placeholder="Body of the Article" ></textarea>
+
+            <label for="posttextEditor">Note: Make sure the images you add in your post are hosted on the internet
+                somewhere and not on your local machine. Remember if the photos are on your local machine then they
+                will not show up in the final post.</label>
+            <input name="postBody" id="posttextEditor" class="form-control" type="hidden"></input>
+            <div class="form-group" id="editor-container" style="height: 600px;">
             </div>
+
+            <!-- Initialize Quill editor -->
+            <script>
+                var toolbarOptions = [
+                    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                    ['blockquote', 'code-block'],
+
+                    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+                    [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+                    [{ 'direction': 'rtl' }],                         // text direction
+
+                    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+                    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                    [{ 'font': [] }],
+                    [{ 'align': [] }],
+                    ['link','image','video'],
+
+                    ['clean']                                         // remove formatting button
+                ];
+                var quill = new Quill('#editor-container', {
+                    modules: {
+                        toolbar: toolbarOptions
+                    },
+                    theme: 'snow'
+                });
+
+            </script>
 
             <!-- Tags and Keywords -->
             <div class="form-group">
-                <label for="tags">Add keywords and tags for your post by separating them with commas. Remember don't leave any trailing commas as it will create an empty tag.</label>
+                <label for="tags">Add keywords and tags for your post by separating them with commas. Remember don't
+                    leave any trailing commas as it will create an empty tag.</label>
                 <input type="text" name="tags" class="form-control" placeholder="tags and keywords" required>
             </div><br>
 
             <!-- Photo for the article -->
             <div class="form-group">
-                <label for="photo">Choose a Photo for the Article. This is the main photo which will be used to display your post.</label>
-                <input type="file" name="img"  accept="image/*" required>
+                <label for="photo">Choose a Photo for the Article. This is the main photo which will be used to display
+                    your post.</label>
+                <input type="file" name="img" accept="image/*" required>
             </div><br>
 
             <!-- author and about author -->
@@ -62,7 +105,8 @@
                 <input type="text" name="author" class="form-control" placeholder="Author's Name" required>
             </div>
             <div class="form-group">
-                <textarea id="" name="aboutAuthor" cols="30" rows="5" class="form-control" placeholder="About Author" required></textarea>
+                <textarea id="" name="aboutAuthor" cols="30" rows="5" class="form-control" placeholder="About Author"
+                    required></textarea>
             </div>
 
             <div class="form-group">
@@ -70,5 +114,15 @@
             </div>
         </form>
     </div>
+
+    <!-- Form Submit  -->
+    <script>
+        var form = document.querySelector('form');
+        form.onsubmit = function () {
+            // Populate hidden form on submit
+            $('#posttextEditor').val(quill.root.innerHTML);
+            return true;
+        };
+    </script>
 </section>
 <%- include('./partials/footer'); -%>
