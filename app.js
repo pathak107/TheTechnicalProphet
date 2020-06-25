@@ -2,6 +2,10 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const https = require('https');
+
+//on page seo
+const seo=require('./controllers/seoMeta');
+
 const fs=require('fs');
 var session = require('express-session')
 // const bodyParser = require('body-parser');
@@ -67,7 +71,7 @@ app.use('/newPost', newPostController);
 app.use('/mobile', mobileController)
 // about route
 app.get('/about', function (req, res) {
-  res.render('about', { isLoggedIn: req.session.isLoggedIn });
+  res.render('about', { isLoggedIn: req.session.isLoggedIn,seo:seo });
 });
 
 //404 page

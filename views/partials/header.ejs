@@ -3,24 +3,25 @@
 
 <head>
 	<title>The Technical Prophet</title>
-	<meta name="description" content="A technical blog ">
+	<meta name="description" content="<%=seo.siteDescription%>">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- facebook linkedin meta tags -->
 	<meta property="og:type" content="article" />
-	<meta property="og:title" content="TITLE OF YOUR POST OR PAGE" />
-	<meta property="og:description" content="DESCRIPTION OF PAGE CONTENT" />
-	<meta property="og:image" content="LINK TO THE IMAGE FILE" />
-	<meta property="og:url" content="PERMALINK" />
-	<meta property="og:site_name" content="SITE NAME" />
+	<meta property="og:title" content="<%=seo.title%>" />
+	<meta property="og:description" content="<%=seo.description%>" />
+	<meta property="og:image" content="<%=seo.image%>" />
+	<meta property="og:url" content="<%=seo.url%>" />
+	<meta property="og:site_name" content="<%=seo.sitename%>" />
 
 	<!-- twitter meta tags -->
-	<meta name="twitter:title" content="TITLE OF POST OR PAGE">
-	<meta name="twitter:description" content="DESCRIPTION OF PAGE CONTENT">
-	<meta name="twitter:image" content="LINK TO IMAGE">
-	<meta name="twitter:site" content="@USERNAME">
-	<meta name="twitter:creator" content="@USERNAME">
+	<meta name="twitter:title" content="<%=seo.title%>">
+	<meta name="twitter:description" content="<%=seo.description%>">
+	<meta name="twitter:image" content="<%=seo.image%>">
+	<meta name="twitter:site" content="<%=seo.twitterSite%>">
+	<meta name="twitter:creator" content="<%=seo.twitterCreator%>">
+	<meta name="twitter:card" content="summary_large_image">
 
 	<!-- canonical tag -->
 	<link rel="canonical" href="http://blog.istemanipal.com/" />

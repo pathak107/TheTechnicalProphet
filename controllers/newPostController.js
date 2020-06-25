@@ -2,6 +2,8 @@ const express = require('express')
 const blogpost = require('../models/blogPosts');
 const comment = require('../models/comment');
 
+const seo=require('./seoMeta');
+
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API);
 
@@ -16,7 +18,7 @@ router.get('/', (req, res) => {
     if (req.session.isLoggedIn == undefined) {
         return res.redirect('/auth/login');
     }
-    res.render('newpost', { isLoggedIn: req.session.isLoggedIn });
+    res.render('newpost', { isLoggedIn: req.session.isLoggedIn ,seo:seo});
 })
 router.post('/', upload.single('img'), (req, res) => {
     //making tags array
