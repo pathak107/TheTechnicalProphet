@@ -33,6 +33,13 @@ router.get('/:postID', function (req, res) {
     blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
         if (err) console.log(err);
 
+        //Updating the views of the post as someone visited the page
+        post.views+=1;
+        post.save((err) => {
+            if (err) console.log(err);
+        });
+
+
         //fetching comments of this post
         comment.find({ _postid: req.params.postID }, (err, comments) => {
 
@@ -64,7 +71,7 @@ router.get('/:postID', function (req, res) {
         }).sort({ timestamp: 'desc' })
             .select('-_postid')
     })
-        .select('title body author shortDescription aboutAuthor imageurl tags')
+        .select('title body author shortDescription aboutAuthor imageurl tags views')
 
         
 

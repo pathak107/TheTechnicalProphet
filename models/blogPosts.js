@@ -10,6 +10,7 @@ var blogPostSchema= new mongoose.Schema({
     shortDescription:String, 
     imageurl:String,
     tags:Array,
+    views:{type:Number, default:0},
 });
 module.exports=mongoose.model('blogPost',blogPostSchema);
 

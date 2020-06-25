@@ -16,11 +16,11 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 1. Nodemailer to mail all the subscribed users.
 1. Rest API for mobile app of iste to provide information about blog posts in json format.
 1. Uses mongoDB to store sessions
+1. Added editing blogs functionality
+1. Added number of views on blog posts in the REST API for mobile app
 
 ### Functionality to add-
 1. Pagination
-1. Edit blog posts
-1. Count number of views per blog.
 1. Ensure proper working of nodemailer
 1. Removing the main banner from every page except home page.
 1. Implement Quill custom css classes for proper rendering of blog posts.
