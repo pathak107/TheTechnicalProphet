@@ -5,7 +5,7 @@ const blogPosts = require('../models/blogPosts')
 const comment = require('../models/comment')
 
 //seo
-const seo=require('./seoMeta');
+const seo = require('./seoMeta');
 
 //Serving static files
 router.use(express.static('public'));
@@ -19,7 +19,7 @@ router.get('/', function (req, res) {
     //Apply pagination
     blogPosts.find((err, posts) => {
         if (err) console.log(err);
-        res.render('blog', { isLoggedIn: req.session.isLoggedIn, posts: posts ,seo:seo});
+        res.render('blog', { isLoggedIn: req.session.isLoggedIn, posts: posts, seo: seo });
     })
         .select('title timestamp shortDescription imageurl')
         .sort({ timestamp: 'desc' });
@@ -33,20 +33,27 @@ router.get('/:postID', function (req, res) {
     blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
         if (err) console.log(err);
 
+        //Updating the views of the post as someone visited the page
+        post.views+=1;
+        post.save((err) => {
+            if (err) console.log(err);
+        });
+
+
         //fetching comments of this post
         comment.find({ _postid: req.params.postID }, (err, comments) => {
-            
-            
+
+
             //fetching recent Blogs
             blogPosts.find((err, recentPosts) => {
                 if (err) console.log(err);
 
                 //setting the seo data
-                seo.image= "https://blog.istemanipal.com/mobile/"+post.imageurl;
-                seo.description=post.shortDescription;
-                seo.siteDescription=post.shortDescription;
-                seo.title=post.title;
-                seo.url="https://blog.istemanipal.com/articles/"+post._id;
+                seo.image = "https://blog.istemanipal.com/mobile/" + post.imageurl;
+                seo.description = post.shortDescription;
+                seo.siteDescription = post.shortDescription;
+                seo.title = post.title;
+                seo.url = "https://blog.istemanipal.com/articles/" + post._id;
 
                 //finally rendering the article page
                 res.render('blog-single', {
@@ -54,7 +61,7 @@ router.get('/:postID', function (req, res) {
                     post: post,
                     comments: comments,
                     recentPosts: recentPosts,
-                    seo:seo
+                    seo: seo
                 });
 
             }).select('title timestamp imageurl')
@@ -64,7 +71,9 @@ router.get('/:postID', function (req, res) {
         }).sort({ timestamp: 'desc' })
             .select('-_postid')
     })
-        .select('title body author shortDescription aboutAuthor imageurl tags')
+        .select('title body author shortDescription aboutAuthor imageurl tags views')
+
+        
 
 })
 router.post('/:postID', upload.none(), (req, res) => {

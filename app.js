@@ -59,6 +59,7 @@ const articleController = require('./controllers/articleController')
 const contactController = require('./controllers/contactController')
 const newPostController = require('./controllers/newPostController')
 const mobileController = require('./controllers/mobileController')
+const updatePostController=require('./controllers/updatePostController');
 
 
 
@@ -66,6 +67,7 @@ const mobileController = require('./controllers/mobileController')
 app.use('/', rootController)
 app.use('/auth', authController);
 app.use('/articles', articleController);
+app.use('/update',updatePostController);
 app.use('/contact', contactController);
 app.use('/newPost', newPostController);
 app.use('/mobile', mobileController)
