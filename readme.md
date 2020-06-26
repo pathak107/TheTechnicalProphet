@@ -10,7 +10,7 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 ### Features-
 1. Uses nodejs and mongodb as backend
 1. Ejs templating to serve data to front end from APIs
-1. WYSIWYG editoe
+1. WYSIWYG editor
 1. Seo open graph tags for facebook and twitter
 1. Embed option in blog post creation for youtube videos and images.
 1. Nodemailer to mail all the subscribed users.
