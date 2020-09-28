@@ -5,6 +5,7 @@
 	<!-- Google analytics for the page -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-171309141-1"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
@@ -74,19 +75,37 @@
 				<ul class="navbar-nav ml-auto">
 					<li id="home" class="nav-item  active"><a href="/" class="nav-link">Home</a></li>
 					<li id="articles" class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle"  href="/articles" id="navbarDropdown" role="button"  aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="/articles" id="navbarDropdown" role="button"
+							aria-haspopup="true" aria-expanded="false">
 							Articles
-						  </a>
-						  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/articles?category=Science">Science</a>
-							<a class="dropdown-item" href="/articles?category=Cyber-Tech">Cyber Tech</a>
-							<a class="dropdown-item" href="/articles?category=Social">Social</a>
-						  </div>
+						</a>
+
+						<div id="categoryDropDown" class="dropdown-menu" aria-labelledby="navbarDropdown">
+						</div>
+
+						<script>
+							axios.get('/newPost/allCategories')
+								.then(response => {
+									var cats=response.data.data;
+									for (var i = 0; i < cats.length; i++) {
+										var anchor = document.createElement("a");
+										anchor.classList.add("dropdown-item");
+										anchor.href = "/articles?category="+cats[i].name
+										anchor.innerHTML = cats[i].name.toString();
+										document.getElementById("categoryDropDown").appendChild(anchor);
+									}
+
+								})
+								.catch(error => {
+									console.log(error);
+								})
+						</script>
 					</li>
 					<li id="about" class="nav-item "><a href="/about" class="nav-link">Team</a></li>
 					<li id="contact" class="nav-item "><a href="/contact" class="nav-link">Contact</a></li>
 					<% if( isLoggedIn===true) { %>
 					<li id="newPost" class="nav-item "><a href="/newPost" class="nav-link">New Post</a></li>
+					<li id="newPost" class="nav-item "><a href="/newPost/addCategory" class="nav-link">Add Category</a></li>
 					<li id="logout" class="nav-item "><a href="/auth/logout" class="nav-link">Logout</a></li>
 
 					<% } else { %>

@@ -45,9 +45,9 @@
             <div class="form-group">
                 <label for="category">Specify the Category this articles belongs to.</label>
                 <select name="category" id="category" class="form-control" required>
-                    <option value="Science">Science</option>
-                    <option value="Cyber-Tech">Cyber-Tech</option>
-                    <option value="Social">Social</option>
+                    <% for(var i=0; i< categories.length; i++){%>
+                        <option value="<%= categories[i].name %>"><%= categories[i].name %></option>
+                    <%}%>
                 </select>
             </div><br>
 
