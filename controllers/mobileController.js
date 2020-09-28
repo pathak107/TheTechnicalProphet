@@ -9,13 +9,29 @@ router.use(express.static('public'));
 // To send blog posts to mobile
 router.get('/blogPosts', function (req, res) {
     //get all articles
-    blogPosts.find((err, posts) => {
-        if (err) console.log(err);
-        res.json(
-            posts);
-    })
-        .sort({ timestamp: 'desc' })
-        .select('-body');
+    if (req.query.page == undefined) {
+        blogPosts.find((err, posts) => {
+            if (err) console.log(err);
+            res.json(
+                posts);
+        })
+            .sort({ timestamp: 'desc' })
+            .select('-body')
+    }
+    else {
+        const POSTS_PER_PAGE = 5;
+        let page = +req.query.page || 1;
+        blogPosts.find((err, posts) => {
+            if (err) console.log(err);
+            res.json(
+                posts);
+        })
+            .sort({ timestamp: 'desc' })
+            .select('-body')
+            .skip((page - 1) * POSTS_PER_PAGE)
+            .limit(POSTS_PER_PAGE);
+    }
+
 
 })
 

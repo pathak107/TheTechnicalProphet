@@ -18,13 +18,16 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 1. Uses mongoDB to store sessions
 1. Added editing blogs functionality
 1. Added number of views on blog posts in the REST API for mobile app
+1. Added google analytics
+1. Added image resizer tool in WYSIWYG editor
+1. Used pm2 module for autorestart the app on server and set env to production for caching.
 
 ### Functionality to add-
 1. Pagination
 1. Ensure proper working of nodemailer
 1. Removing the main banner from every page except home page.
 1. Implement Quill custom css classes for proper rendering of blog posts.
-1. Set up changes for production environment
+1. Implement categories route to show different posts depending upon category.
 
 Whenever in production mode-
 change http to https and change session's secure parameter to true

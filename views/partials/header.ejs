@@ -2,7 +2,19 @@
 <html lang="en">
 
 <head>
-	<title>The Technical Prophet</title>
+	<!-- Google analytics for the page -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-171309141-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-171309141-1');
+	</script>
+
+
+	<title>Technical Prophet</title>
 	<meta name="description" content="<%=seo.siteDescription%>">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -51,7 +63,7 @@
 
 	<nav class="navbar px-md-0 navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			
+
 			<a class="navbar-brand" href="/">Technical<i>Prophet</i>.</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
 				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +73,16 @@
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li id="home" class="nav-item  active"><a href="/" class="nav-link">Home</a></li>
-					<li id="articles" class="nav-item "><a href="/articles" class="nav-link">Articles</a></li>
+					<li id="articles" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle"  href="/articles" id="navbarDropdown" role="button"  aria-haspopup="true" aria-expanded="false">
+							Articles
+						  </a>
+						  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/articles?category=Science">Science</a>
+							<a class="dropdown-item" href="/articles?category=Cyber-Tech">Cyber Tech</a>
+							<a class="dropdown-item" href="/articles?category=Social">Social</a>
+						  </div>
+					</li>
 					<li id="about" class="nav-item "><a href="/about" class="nav-link">Team</a></li>
 					<li id="contact" class="nav-item "><a href="/contact" class="nav-link">Contact</a></li>
 					<% if( isLoggedIn===true) { %>

@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
+const compression = require('compression')
+app.use(compression())
 const https = require('https');
 
 //on page seo
@@ -46,7 +48,7 @@ app.use(session({
   store: store,
   cookie: {
     //remeber to set this to true when in production
-    secure: true,
+    secure: false,
     maxAge:60*60*1000
   }
 }))
@@ -85,11 +87,11 @@ app.use((req, res) => {
 const port = process.env.PORT || 443
 
 //Always change this while deploying it to serer
-// app.listen(3000, () => {
-//   console.log('Server Started');
-// });
+app.listen(3000, () => {
+  console.log('Server Started');
+});
 
-https.createServer({
-  cert:certificate,
-  key:privateKey
-},app).listen(port);
+// https.createServer({
+//   cert:certificate,
+//   key:privateKey
+// },app).listen(port);

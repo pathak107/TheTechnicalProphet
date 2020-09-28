@@ -12,21 +12,48 @@ router.use(express.static('public'));
 
 const upload = require('./multerUpload');
 
+const POSTS_PER_PAGE = 6;
+
 // /artcile rooute
-router.get('/', function (req, res) {
+router.get('/', async function (req, res) {
     //get all articles
-
     //Apply pagination
-    blogPosts.find((err, posts) => {
-        if (err) console.log(err);
-        res.render('blog', { isLoggedIn: req.session.isLoggedIn, posts: posts, seo: seo });
-    })
-        .select('title timestamp shortDescription imageurl')
-        .sort({ timestamp: 'desc' });
+    let page = +req.query.page || 1;
+    let query;
+    if (req.query.category != undefined) {
+        query = { category: req.query.category }
+    } else {
+        query = {};
+    }
 
+    let totalArticles;
+    blogPosts.find(query).countDocuments((err, articles) => {
+        if (err) console.log(err);
+        totalArticles = +articles
+        blogPosts.find(query, (err, posts) => {
+            if (err) console.log(err);
+            res.render('blog',
+                {
+                    isLoggedIn: req.session.isLoggedIn,
+                    posts: posts,
+                    seo: seo,
+                    currentPage:page,
+                    hasNextPage:page*POSTS_PER_PAGE<totalArticles,
+                    nextPage:page+1,
+                    prevPage:page-1,
+                    hasPrevPage:page>1
+                });
+        })
+            .skip((page - 1) * POSTS_PER_PAGE)
+            .limit(POSTS_PER_PAGE)
+            .select('title timestamp shortDescription imageurl')
+            .sort({ timestamp: 'desc' });
+
+    })
 })
 
-// /article/product_id routes to get single article
+
+// /article/post_id routes to get single article
 router.get('/:postID', function (req, res) {
     //get all tags and recent blogs
     //get single articles and its comments using id
@@ -34,7 +61,7 @@ router.get('/:postID', function (req, res) {
         if (err) console.log(err);
 
         //Updating the views of the post as someone visited the page
-        post.views+=1;
+        post.views += 1;
         post.save((err) => {
             if (err) console.log(err);
         });
@@ -73,7 +100,7 @@ router.get('/:postID', function (req, res) {
     })
         .select('title body author shortDescription aboutAuthor imageurl tags views')
 
-        
+
 
 })
 router.post('/:postID', upload.none(), (req, res) => {

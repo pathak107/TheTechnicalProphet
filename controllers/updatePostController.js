@@ -27,6 +27,15 @@ router.get('/:id', (req, res) => {
 router.post('/:id', upload.single('img'), (req, res) => {
     var id = req.params.id;
     blogpost.findById(id, (err, post) => {
+        //deleting the old image
+        const imageToBeDeleted=post.imageurl;
+        fs.unlink('./public/uploads/' + imageToBeDeleted, function (err) {
+            if (err) console.log(err);
+            // if no error, file has been deleted successfully
+            console.log('File deleted!');
+        });
+
+
         // Once we found the post by id to update we'll feed in the new values
         //making tags array
         var tags = (req.body.tags).split(','); 

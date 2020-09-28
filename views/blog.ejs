@@ -1,53 +1,117 @@
 <%- include('./partials/header'); -%>
 
-   	<section class="ftco-section bg-light">
-      <div class="container">
-        <div class="row d-flex">
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row d-flex">
 
-          <% for(var i=0 ; i< posts.length;i++){%>
-          <!-- Single Card of post -->
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="/articles/<%=posts[i]._id%>" class="block-20" style="background-image: url('uploads/<%=posts[i].imageurl%>');">
-              </a>
-              <div class="text p-4 float-right d-block">
-              	<div class="topper d-flex align-items-center">
-              		<div class="one py-2 pl-3 pr-1 align-self-stretch">
-                    <span class="day"><%=new Date(posts[i].timestamp).getDate()%></span>
-                  </div>
-                  <div class="two pl-0 pr-3 py-2 align-self-stretch">
-                    <span class="yr"><%=new Date(posts[i].timestamp).getFullYear()%></span>
-                    <span class="mos"><%=new Date(posts[i].timestamp).toUTCString().slice(8,11)%></span>
-                  </div>
-              	</div>
-              	<h3 class="heading mb-3"><a href="/articles/<%=posts[i]._id%>"><%=posts[i].title%></a></h3>
-                <p><%=posts[i].shortDescription.slice(0,100)%>...</p>
-                <p><a href="/articles/<%=posts[i]._id%>" class="btn-custom"><span class="ion-ios-arrow-round-forward mr-3"></span>Read more</a></p>
+      <% for(var i=0 ; i< posts.length;i++){%>
+      <!-- Single Card of post -->
+      <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry justify-content-end">
+          <a href="/articles/<%=posts[i]._id%>" class="block-20"
+            style="background-image: url('uploads/<%=posts[i].imageurl%>');">
+          </a>
+          <div class="text p-4 float-right d-block">
+            <div class="topper d-flex align-items-center">
+              <div class="one py-2 pl-3 pr-1 align-self-stretch">
+                <span class="day"><%=new Date(posts[i].timestamp).getDate()%></span>
+              </div>
+              <div class="two pl-0 pr-3 py-2 align-self-stretch">
+                <span class="yr"><%=new Date(posts[i].timestamp).getFullYear()%></span>
+                <span class="mos"><%=new Date(posts[i].timestamp).toUTCString().slice(8,11)%></span>
               </div>
             </div>
+            <h3 class="heading mb-3"><a href="/articles/<%=posts[i]._id%>"><%=posts[i].title%></a></h3>
+            <p><%=posts[i].shortDescription.slice(0,100)%>...</p>
+            <p><a href="/articles/<%=posts[i]._id%>" class="btn-custom"><span
+                  class="ion-ios-arrow-round-forward mr-3"></span>Read more</a></p>
           </div>
-          <!-- single card ends -->
-          <%}%>
+        </div>
+      </div>
+      <!-- single card ends -->
+      <%}%>
 
         </div>
 
+        
 
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
+                <%if(currentPage>1){%>
+      <li><a id="prevBtn">&lt;</a></li>
+      <%}%>
+                
+                <%if(currentPage!=1){%>
+      <li><a id="firstPage">1</a></li>
+      <%}%>
+                <%if(hasPrevPage && prevPage!=1){%>
+      <li><a id="prevPage"><%=prevPage%></a></li>
+      <%}%>
+                <li class="active"><span><a id="currPage" ><%=currentPage%></a></span></li>
+
+      <%if(hasNextPage){%>
+      <li><a id="nextPage"><%=nextPage%></a></li>
+      <%}%>
+
+                <%if(hasNextPage){%>
+      <li><a id="nextBtn">&gt;</a></li>
+      <%}%>
+
               </ul>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <%- include('./partials/footer'); -%>
+        <script>
+          // let route = window.location.href;
+          console.log(route.includes('/articles/?category'))
+          if (route.includes('/articles/?category')) {
+            console.log("im here")
+            route = route.split("&")[0];
+            if (document.getElementById('nextBtn') != null) {
+              document.getElementById('nextBtn').href = route.toString() + "&page=<%=currentPage+1%>";
+            }
+            if (document.getElementById('firstPage') != null) {
+              document.getElementById('firstPage').href = route.toString() + "&page=1%>";
+            }
+            if (document.getElementById('prevPage') != null) {
+              document.getElementById('prevPage').href = route.toString() + "&page=<%=prevPage%>";
+            }
+            if (document.getElementById('nextPage') != null) {
+              document.getElementById('nextPage').href = route.toString() + "&page=<%=nextPage%>";
+            }
+            if (document.getElementById('currPage') != null) {
+              document.getElementById('currPage').href = route.toString() + "&page=<%=currentPage%>";
+            }
+            if (document.getElementById('prevBtn') != null) {
+              document.getElementById('prevBtn').href = route.toString() + "&page=<%=currentPage-1%>";
+            }
+          }
+          else {
+            if (document.getElementById('nextBtn') != null) {
+              document.getElementById('nextBtn').href = "/articles/?page=<%=currentPage+1%>";
+            }
+            if (document.getElementById('firstPage') != null) {
+              document.getElementById('firstPage').href = "/articles/?page=1";
+            }
+            if (document.getElementById('prevPage') != null) {
+              document.getElementById('prevPage').href = "/articles?page=<%=prevPage%>";
+            }
+            if (document.getElementById('nextPage') != null) {
+              document.getElementById('nextPage').href = "/articles?page=<%=nextPage%>";
+            }
+            if (document.getElementById('currPage') != null) {
+              document.getElementById('currPage').href = "/articles?page=<%=currentPage%>";
+            }
+            if (document.getElementById('prevBtn') != null) {
+              document.getElementById('prevBtn').href = "/articles/?page=<%=currentPage-1%>";
+            }
+          }
+        </script>
+
+    </div>
+</section>
+
+<%- include('./partials/footer'); -%>

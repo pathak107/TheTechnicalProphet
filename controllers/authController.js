@@ -24,7 +24,6 @@ router.post('/login',upload.none(),(req, res) => {
 });
 
 router.get('/logout',(req,res)=>{
-    
     req.session.destroy((err)=>{
         if(err) console.log(err);
         console.log('logged out');
