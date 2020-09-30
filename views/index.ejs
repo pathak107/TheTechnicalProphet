@@ -10,13 +10,13 @@
 					<div class="case">
 						<div class="row">
 							<div class="col-md-6 col-lg-6 col-xl-8 d-flex">
-								<a href="/articles/<%=posts[i]._id%>" class="img w-100 mb-3 mb-md-0"
+								<a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>" class="img w-100 mb-3 mb-md-0"
 									style="background-image: url(uploads/<%=posts[i].imageurl%>);"></a>
 							</div>
 							<div class="col-md-6 col-lg-6 col-xl-4 d-flex">
 								<div class="text w-100 pl-md-3">
 									<span class="subheading"><%=posts[i].category%></span>
-									<h2><a href="/articles/<%=posts[i]._id%>"><%=posts[i].title%></a>
+									<h2><a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%=posts[i].title%></a>
 									</h2>
 									<ul class="media-social list-unstyled">
 										<li class="ftco-animate"><a target="_blank" href="https://www.linkedin.com/company/iste-manipal/"><span class="icon-linkedin"></span></a></li>
@@ -26,7 +26,7 @@
 										</li>
 									</ul>
 									<div class="meta">
-										<p class="mb-0"><a href="/articles/<%=posts[i]._id%>"><%=new Date(posts[i].timestamp).toISOString().slice(0,10)%></a> | <a href="/articles/<%=posts[i]._id%>"><%=posts[i].timeToRead%> min read</a></p>
+										<p class="mb-0"><a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%=new Date(posts[i].timestamp).toISOString().slice(0,10)%></a> | <a href="/articles/<%=posts[i]._id%>"><%=posts[i].timeToRead%> min read</a></p>
 									</div>
 								</div>
 							</div>

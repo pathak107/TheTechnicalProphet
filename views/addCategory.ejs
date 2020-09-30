@@ -11,6 +11,13 @@
                 <input type="submit" class="btn btn-primary py-3 px-5">
             </div>
         </form>
+        <br>
+        <h4>Current Categories</h4>
+        <ul>
+            <%for(var i=0;i< categories.length;i++){%>
+                <li><%= categories[i].name %> |  <span><a href="/newPost/delete/<%= categories[i]._id %>">Delete this category</a></span> </li>
+            <%}%>
+        </ul>
     </div>
 </section>
 <%- include('./partials/footer'); -%>

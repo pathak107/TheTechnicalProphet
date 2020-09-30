@@ -10,6 +10,8 @@ router.use(express.static('public'));
 //Multer upload
 const upload = require('./multerUpload');
 
+const Category = require('../models/category');
+
 //newPost
 router.get('/:id', (req, res) => {
     if (req.session.isLoggedIn == undefined) {
@@ -56,5 +58,7 @@ router.post('/:id', upload.single('img'), (req, res) => {
         });
     });
 });
+
+
 
 module.exports = router;

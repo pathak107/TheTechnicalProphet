@@ -19,15 +19,15 @@ router.get('/', (req, res) => {
     if (req.session.isLoggedIn == undefined) {
         return res.redirect('/auth/login');
     }
-    Category.find((err,categories)=>{
-        if(err)console.log(err)
-        res.render('newpost',{
+    Category.find((err, categories) => {
+        if (err) console.log(err)
+        res.render('newpost', {
             isLoggedIn: req.session.isLoggedIn,
             seo: seo,
-            categories:categories
+            categories: categories
         });
     })
-    
+
 })
 router.post('/', upload.single('img'), (req, res) => {
     //making tags array
@@ -71,19 +71,19 @@ router.post('/', upload.single('img'), (req, res) => {
 
 });
 
-router.get('/allCategories',(req,res)=>{
-    Category.find((err,categories)=>{
-        if(err){
+router.get('/allCategories', (req, res) => {
+    Category.find((err, categories) => {
+        if (err) {
             return res.status(500).json({
-                success:false,
-                message:"Some error occured in retrieval from database"
+                success: false,
+                message: "Some error occured in retrieval from database"
             })
         }
-        else{
+        else {
             return res.status(200).json({
-                success:true,
-                message:"Successfull",
-                data:categories
+                success: true,
+                message: "Successfull",
+                data: categories
             })
         }
     })
@@ -92,14 +92,27 @@ router.get('/addCategory', (req, res) => {
     if (req.session.isLoggedIn == undefined) {
         return res.redirect('/auth/login');
     }
-    res.render('addCategory', {
-        message: "Add new category name.",
-        seo: seo,
-        isLoggedIn: req.session.isLoggedIn
+    Category.find((err, categories) => {
+        if (err) {
+            return res.render('addCategory', {
+                message: "Some error occured in loading the categories. Please try again later",
+                seo: seo,
+                isLoggedIn: req.session.isLoggedIn,
+                categories: []
+            })
+        }
+        else {
+            res.render('addCategory', {
+                message: "Add new category name.",
+                seo: seo,
+                isLoggedIn: req.session.isLoggedIn,
+                categories: categories
+            })
+        }
     })
 })
 
-router.post('/addCategory',upload.none(), (req, res) => {
+router.post('/addCategory', upload.none(), (req, res) => {
     if (req.session.isLoggedIn == undefined) {
         return res.redirect('/auth/login');
     }
@@ -114,10 +127,38 @@ router.post('/addCategory',upload.none(), (req, res) => {
                 isLoggedIn: req.session.isLoggedIn
             })
         }
-        return res.redirect('/newPost')
+        return res.redirect('/newPost/addCategory')
     })
 })
 
+router.get('/delete/:catID', (req, res) => {
+    if (req.session.isLoggedIn == undefined) {
+        return res.redirect('/auth/login');
+    }
+    Category.findById(req.params.catID, (err, category) => {
+        if (err) {
+            return res.render('addCategory', {
+                message: "Some error occured in deleting the category.",
+                seo: seo,
+                isLoggedIn: req.session.isLoggedIn
+            })
+        }
+
+        category.remove((error) => {
+            if (error) {
+                return res.render('addCategory', {
+                    message: "Some error occured in deleting the category.",
+                    seo: seo,
+                    isLoggedIn: req.session.isLoggedIn
+                })
+            }
+            else {
+                return res.redirect('/newPost/addCategory')
+            }
+        })
+
+    })
+})
 
 module.exports = router;
 

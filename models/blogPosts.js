@@ -1,6 +1,10 @@
 const mongoose=require('mongoose');
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
+
 var blogPostSchema= new mongoose.Schema({
     title:String,
+    slug: { type: String, slug: "title" },
     body:String,
     timestamp: { type: Date, default: Date.now },
     timeToRead:Number,

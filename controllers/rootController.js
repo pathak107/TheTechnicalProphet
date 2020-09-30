@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
     })
     .limit(5)
     .sort({timestamp:'desc'})
-    .select('title timestamp timeToRead category imageurl');
+    .select('title timestamp timeToRead category imageurl slug');
     
 })
 

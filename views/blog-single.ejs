@@ -66,11 +66,11 @@
         <div class="block-21 mb-4 d-flex">
           <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
           <div class="text">
-            <h3 class="heading"><a href="/articles/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
+            <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
             <div class="meta">
-              <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
+              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
                   <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
-              <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
+              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@
                       console.log(result);
                       $("#deleteButtonComment").text(result.message);
                       if (result.message == "success") {
-                        window.location.href = "/articles/<%=post._id%>";
+                        window.location.href = "/articles/single/<%= post.slug %>/<%=post._id%>";
                       }
 
                     }
@@ -124,7 +124,7 @@
 
         <div class="comment-form-wrap pt-5">
           <h3 class="mb-5">Leave a comment</h3>
-          <form action="/articles/<%=post._id%>" method="POST" class="p-5 bg-light" enctype="multipart/form-data">
+          <form action="/articles/single/<%= post.slug %>/<%=post._id%>" method="POST" class="p-5 bg-light" enctype="multipart/form-data">
             <div class="form-group">
               <label for="name">Name *</label>
               <input type="text" class="form-control" name="name" required>
@@ -166,11 +166,11 @@
         <div class="block-21 mb-4 d-flex">
           <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
           <div class="text">
-            <h3 class="heading"><a href="/articles/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
+            <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
             <div class="meta">
-              <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
+              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
                   <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
-              <div><a href="/articles/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
+              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
             </div>
           </div>
         </div>

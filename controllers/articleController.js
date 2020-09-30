@@ -16,6 +16,7 @@ const POSTS_PER_PAGE = 6;
 
 // /artcile rooute
 router.get('/', async function (req, res) {
+    console.log("im here")
     //get all articles
     //Apply pagination
     let page = +req.query.page || 1;
@@ -32,7 +33,7 @@ router.get('/', async function (req, res) {
         totalArticles = +articles
         blogPosts.find(query, (err, posts) => {
             if (err) console.log(err);
-            res.render('blog',
+            return res.render('blog',
                 {
                     isLoggedIn: req.session.isLoggedIn,
                     posts: posts,
@@ -46,15 +47,19 @@ router.get('/', async function (req, res) {
         })
             .skip((page - 1) * POSTS_PER_PAGE)
             .limit(POSTS_PER_PAGE)
-            .select('title timestamp shortDescription imageurl')
+            .select('title timestamp shortDescription imageurl slug')
             .sort({ timestamp: 'desc' });
 
     })
 })
 
 
+//Serving static files
+router.use('/single/',express.static('public'));
+router.use('/single/:slug',express.static('public'));
 // /article/post_id routes to get single article
-router.get('/:postID', function (req, res) {
+router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
+    console.log("no im here")
     //get all tags and recent blogs
     //get single articles and its comments using id
     blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
@@ -83,27 +88,28 @@ router.get('/:postID', function (req, res) {
                 seo.url = "https://blog.istemanipal.com/articles/" + post._id;
 
                 //finally rendering the article page
-                res.render('blog-single', {
+                return res.render('blog-single', {
                     isLoggedIn: req.session.isLoggedIn,
                     post: post,
                     comments: comments,
                     recentPosts: recentPosts,
-                    seo: seo
+                    seo: seo,
                 });
 
-            }).select('title timestamp imageurl')
+            }).select('title timestamp imageurl slug')
                 .sort({ timestamp: 'desc' })
                 .limit(3);
 
         }).sort({ timestamp: 'desc' })
             .select('-_postid')
     })
-        .select('title body author shortDescription aboutAuthor imageurl tags views')
+        .select('title body author shortDescription aboutAuthor imageurl tags views slug')
 
 
 
 })
-router.post('/:postID', upload.none(), (req, res) => {
+router.post('/single/:slug/:postID', upload.none(), (req, res) => {
+    var slug= req.params.slug
     //for posting comments
     let post_id = req.params.postID;
     var newComment = new comment({
@@ -114,7 +120,7 @@ router.post('/:postID', upload.none(), (req, res) => {
     })
     newComment.save((err) => {
         if (err) console.log(err)
-        res.redirect('/articles/' + post_id);
+        res.redirect('/articles/single/' + slug+"/"+ post_id);
     });
 })
 
