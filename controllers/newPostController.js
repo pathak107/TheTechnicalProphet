@@ -1,6 +1,7 @@
 const express = require('express')
 const blogpost = require('../models/blogPosts');
-const comment = require('../models/comment');
+const Email = require('../models/emailList');
+const mailer = require('./nodemailer')
 
 const seo = require('./seoMeta');
 
@@ -43,32 +44,31 @@ router.post('/', upload.single('img'), (req, res) => {
         imageurl: req.file.filename,
         tags: tags
     });
-    post.save((err) => {
+    post.save((err,newPost) => {
         if (err) console.log(err);
         console.log("Inserted Post");
         res.redirect('/')
+
+        // Mailing to all the users who have their emails registered
+        Email.find((err, emails) => {
+            if(err) console.log(err)
+
+            //send email
+            const mailOptions = {
+                from: "The Technical Prophet <contactus@istemanipal.com>", // sender address
+                to: emails,
+                subject: `The Technical Prophet | ${req.body.title}`, // Subject line
+                html: `<h2>The Technical Prophet just posted a new article. Click the link below to checkout.</h2>
+                    <a href="https://blog.istemanipal.com/articles/single/${newPost.slug}/${newPost._id}"> ${req.body.title}</a>
+                    <p>We'll keep you posted for further updates.</p>`, // plain text body
+            };
+            mailer.sendMail(mailOptions, (err) => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        }).select('email');
     })
-
-    //// Mailing to all the users who have their emails registered
-    // comment.find((err, comments) => {
-    //     const msg = {
-    //         to: comments.email,
-    //         from: 'istemanipal@gmail.com',
-    //         subject: 'The Technical Prophet | ' + req.body.title,
-    //         text: 'The Technical Prophet has uploaded a new post checkout now!',
-    //         html: '<a href="https://blog-istemanipal.herokuapp.com/" ><strong>' + req.body.title + '</strong></a>',
-    //     };
-    //     sgMail
-    //         .send(msg)
-    //         .then(() => { }, error => {
-    //             console.error(error);
-
-    //             if (error.response) {
-    //                 console.error(error.response.body)
-    //             }
-    //         });
-    // }).select('email');
-
 });
 
 router.get('/allCategories', (req, res) => {

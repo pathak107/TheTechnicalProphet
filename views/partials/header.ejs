@@ -101,6 +101,7 @@
 								})
 						</script>
 					</li>
+					<li id="subscribe" class="nav-item "><a href="/auth/mailSubscription" class="nav-link">Subscribe</a></li>
 					<li id="about" class="nav-item "><a href="/about" class="nav-link">Team</a></li>
 					<li id="contact" class="nav-item "><a href="/contact" class="nav-link">Contact</a></li>
 					<% if( isLoggedIn===true) { %>
@@ -128,6 +129,10 @@
 						}
 						else if (route.includes('/contact')) {
 							document.getElementById('contact').classList.add('active');
+							document.getElementById('home').classList.remove('active');
+						}
+						else if (route.includes('/auth/mailSubscription')) {
+							document.getElementById('subscribe').classList.add('active');
 							document.getElementById('home').classList.remove('active');
 						}
 					</script>

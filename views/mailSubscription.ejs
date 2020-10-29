@@ -1,0 +1,18 @@
+<%- include('./partials/header'); -%>
+<section class="ftco-section contact-section">
+    <div class="container">
+        <p>Subscribe to our blog by adding your email and we'll keep you updated.</p>
+        <h1><%= message %></h1>
+        <form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
+            enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary py-3 px-5">
+            </div>
+        </form>
+        <br>
+    </div>
+</section>
+<%- include('./partials/footer'); -%>
