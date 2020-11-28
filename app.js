@@ -32,8 +32,9 @@ app.set('view engine', 'ejs');
 
 //Connection with database
 mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true, useUnifiedTopology:
-    true
+  useNewUrlParser: true, 
+  useUnifiedTopology:true,
+  useCreateIndex:true
 }, (err) => {
   if (err) console.log(err);
   console.log("Connected to Database");
@@ -88,11 +89,11 @@ app.use((req, res) => {
 const port = process.env.PORT || 443
 
 // //Always change this while deploying it to serer
-// app.listen(3000, () => {
-//   console.log('Server Started');
-// });
+app.listen(3000, () => {
+  console.log('Server Started');
+});
 
-https.createServer({
-  cert:certificate,
-  key:privateKey
-},app).listen(port);
+// https.createServer({
+//   cert:certificate,
+//   key:privateKey
+// },app).listen(port);

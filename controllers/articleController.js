@@ -3,6 +3,7 @@ var router = express.Router()
 const fs = require('fs');
 const blogPosts = require('../models/blogPosts')
 const comment = require('../models/comment')
+const mongoose= require('mongoose')
 
 //seo
 const seo = require('./seoMeta');
@@ -11,12 +12,12 @@ const seo = require('./seoMeta');
 router.use(express.static('public'));
 
 const upload = require('./multerUpload');
+const Category = require('../models/category');
 
 const POSTS_PER_PAGE = 6;
 
 // /artcile rooute
 router.get('/', async function (req, res) {
-    console.log("im here")
     //get all articles
     //Apply pagination
     let page = +req.query.page || 1;
@@ -57,12 +58,13 @@ router.get('/', async function (req, res) {
 //Serving static files
 router.use('/single/',express.static('public'));
 router.use('/single/:slug',express.static('public'));
+router.use('/single//:postID',express.static('public'));
 // /article/post_id routes to get single article
 router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
-    console.log("no im here")
+
     //get all tags and recent blogs
     //get single articles and its comments using id
-    blogPosts.findOne({ _id: req.params.postID }, (err, post) => {
+    blogPosts.findById(req.params.postID, (err, post) => {
         if (err) console.log(err);
 
         //Updating the views of the post as someone visited the page
@@ -77,7 +79,7 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
 
 
             //fetching recent Blogs
-            blogPosts.find((err, recentPosts) => {
+            blogPosts.find(async (err, recentPosts) =>{
                 if (err) console.log(err);
 
                 //setting the seo data
@@ -87,6 +89,8 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
                 seo.title = post.title;
                 seo.url = "https://blog.istemanipal.com/articles/" + post._id;
 
+                var cats= await Category.find()
+
                 //finally rendering the article page
                 return res.render('blog-single', {
                     isLoggedIn: req.session.isLoggedIn,
@@ -94,9 +98,10 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
                     comments: comments,
                     recentPosts: recentPosts,
                     seo: seo,
+                    cats:cats
                 });
 
-            }).select('title timestamp imageurl slug')
+            }).select('title timestamp imageurl slug timeToRead')
                 .sort({ timestamp: 'desc' })
                 .limit(3);
 

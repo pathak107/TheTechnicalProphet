@@ -1,7 +1,11 @@
 <%- include('./partials/header'); -%>
 
-<link href="//cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet">
-<script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script>
+<div class="jumbotron  container-fluid" style="background-color: #0cbaba;
+  background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
+  ;
+  ">
+      <h1 class=" my-5 single-article-font text-center" style="color: white;"><%= post.title %></h1>
+</div>
 
 <section class="ftco-section ftco-degree-bg">
   <div class="container">
@@ -148,19 +152,8 @@
     </div> <!-- .col-md-8 -->
     <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
 
-      <!-- <div class="sidebar-box ftco-animate">
-              <div class="categories">
-                <h3>Categories</h3>
-                <li><a href="#">Illustration <span class="ion-ios-arrow-forward"></span></a></li>
-                <li><a href="#">Branding <span class="ion-ios-arrow-forward"></span></a></li>
-                <li><a href="#">Application <span class="ion-ios-arrow-forward"></span></a></li>
-                <li><a href="#">Design <span class="ion-ios-arrow-forward"></span></a></li>
-                <li><a href="#">Marketing <span class="ion-ios-arrow-forward"></span></a></li>
-              </div>
-            </div> -->
-
       <div class="sidebar-box ftco-animate">
-        <h3>Recent Blog</h3>
+        <h3>Recent Posts</h3>
 
         <% for(var i=0;i< recentPosts.length;i++){ %>
         <div class="block-21 mb-4 d-flex">
@@ -170,7 +163,7 @@
             <div class="meta">
               <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
                   <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
-              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
+              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span><%=recentPosts[i].timeToRead %> mins read</span> </a></div>
             </div>
           </div>
         </div>
@@ -186,6 +179,37 @@
         <%}%>
               </div>
             </div>
+
+            <!-- advertisements -->
+            <!-- <div class="ads my-4">
+              <img src="https://josephmuciraexclusives.com/wp-content/uploads/2020/04/Blogads.png" width="240" alt="ad">
+            </div>
+            <div class="ads my-4">
+              <img src="https://i.pinimg.com/originals/7d/23/5a/7d235a1ef6293769131c8511fb4dab33.jpg" width="240" alt="ad">
+            </div>  -->
+            <!-- end of advertisements -->
+
+        <form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
+            enctype="multipart/form-data">
+            <p>Subscribe to our blog and we'll keep you updated with new exciting posts.</p>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary py-3 px-5">
+            </div>
+        </form>
+
+            <div class="sidebar-box ftco-animate">
+              <div class="categories">
+                <h3>Categories</h3>
+                <% for(var i=0; i< cats.length; i++) { %>
+                  <li><a href="/articles?category=<%=cats[i].name%>"><%=cats[i].name%><span class="ion-ios-arrow-forward"></span></a></li>
+                <%}%>
+              </div>
+            </div>
+            
+            
           </div>
 
         </div>

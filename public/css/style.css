@@ -4194,7 +4194,7 @@ input[type="button"].btn-block {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
   background-color: #e9ecef;
-  border-radius: 0.3rem; }
+ }
   @media (min-width: 576px) {
     .jumbotron {
       padding: 4rem 2rem; } }
@@ -8029,7 +8029,7 @@ h1, h2, h3, h4, h5,
 .ftco-navbar-light {
   background: transparent !important;
   position: absolute;
-  top: 20px;
+  
   left: 0;
   right: 0;
   z-index: 3; }
@@ -8628,7 +8628,7 @@ textarea.form-control {
 
 .ftco-footer {
   font-size: 16px;
-  background: #222831;
+  background: black;
   padding: 5em 0 3em 0; }
   .ftco-footer .logo {
     font-size: 34px !important;
@@ -9253,3 +9253,154 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+.car-caption{
+  background-color: #b8c6db96;
+  background-image: linear-gradient(315deg, #b8c6dbc7 0%, #f5f7faa2 74%);margin-bottom: 5%;
+color: black;
+font-size: 20px;
+padding: 1%;
+margin-left: 30%;
+text-align: justify;
+z-index: 1;
+width: 700px;
+border: 2px solid black;
+}
+
+.car{
+  background-repeat: none !important;
+   background-size: cover;
+   margin-top: 5.5%;
+   height: 80vh;
+
+}
+.car-title{
+  font-size:60px;
+  width: 40vw;
+  color: rgb(253, 250, 250);
+  font-family: Play;
+
+
+}
+.car-title:hover{
+  color: var(--yellow);
+  cursor: pointer;
+}
+.nav-custom-color{
+  background-color: black !important;
+}
+.side-car{
+  background-color: #7f5a838e;
+  background-image: linear-gradient(315deg, #7f5a83b0 0%, #0d324da6 74%);
+  height: 80vh;
+  padding: 1%;
+  width: 42vw;
+  margin:auto;
+}
+.btn-color{
+  background-color: black;
+  color: white;
+}
+.btn-color:hover{
+  background-color: white;
+  color: black;
+}
+.p-style{
+  font-size: 15px;
+  padding: 2% ;
+  margin-top: 3%;
+  text-align: justify;
+}
+.cap-style{
+
+}
+@media (max-width: 767.98px) {
+
+  .car-title{
+    font-size:30px;
+    width:92vw;
+    text-align: center;
+  
+  
+  }
+  .p-style{
+    padding-right: 7%;
+    padding-left: 7%;
+    font-size: 12px;
+  }
+  .side-car{
+   
+    height: 80vh;
+    padding: 2%;
+    width: 95vw;
+    margin-left: 10px;
+  }
+  .cap-style{
+    margin-top:4%;
+    font-size: 15px;
+    margin-left: 5.5%;
+  }
+  .btn-color{
+    margin-left: 5.3%;
+
+  }
+  .car{
+    margin-top: 0%;
+    
+  }
+  .single-article-font{
+  font-size: 200% !important;
+  text-align: left !important;
+  }
+  .article-single-content{
+    text-align: justify;
+    width: 85vw !important;
+  }
+  .footer-size{
+    width: 100vw;
+  }
+}
+.cap-style{
+  margin-top:2%;
+}
+.btn-color{
+  text-align: center;
+}
+.single-article-font{
+  font-size: 500%;
+  }
+.alter-margin{
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+.article-single-content{
+  padding: 3%;
+  text-align: justify;
+}
+.heart-color{
+  color: white;
+}
+.heart-color:hover{
+  color: red;
+
+}
+.link-style{
+  color: black !important;
+  font-size: 120%;
+  
+}
+.link-style:hover{
+  color: var(--yellow) !important;
+  font-size: 120%;
+  
+}
+.longer-hr{
+  height: 1px !important;
+  background-color: rgb(180, 178, 178) !important;
+}
+.article-post h2:hover{
+
+  color: var(--yellow);
+  cursor: pointer;
+
+}

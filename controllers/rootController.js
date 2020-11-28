@@ -13,11 +13,23 @@ router.get('/', function (req, res) {
     //get recent blogs
     blogPosts.find((err,posts)=>{
         if(err) console.log(err);
-        res.render('index',{isLoggedIn: req.session.isLoggedIn,posts:posts,seo:seo});
+        blogPosts.find((err,mostViewed)=>{
+            if(err) console.log(err);
+            res.render('index',{
+                isLoggedIn: req.session.isLoggedIn,
+                posts:posts,
+                seo:seo,
+                mostViewed:mostViewed
+            });
+        })
+        .limit(5)
+        .sort({views:'desc'})
+        .select('title author shortDescription timeToRead category imageurl slug views');
+        
     })
-    .limit(5)
+    .limit(3)
     .sort({timestamp:'desc'})
-    .select('title timestamp timeToRead category imageurl slug');
+    .select('title author shortDescription timeToRead category imageurl slug');
     
 })
 

@@ -11,6 +11,7 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 1. Uses nodejs and mongodb as backend
 1. Ejs templating to serve data to front end from APIs
 1. WYSIWYG editor
+1. Created complete CMS and an admin pannel to add, edit, delete posts, add categories, add mail lists.
 1. Seo open graph tags for facebook and twitter
 1. Embed option in blog post creation for youtube videos and images.
 1. Nodemailer to mail all the subscribed users.
@@ -22,12 +23,6 @@ It is fully seo optimized and also uses nodemailer which sends mail to all the r
 1. Added image resizer tool in WYSIWYG editor
 1. Used pm2 module for autorestart the app on server and set env to production for caching.
 
-### Functionality to add-
-1. Pagination
-1. Ensure proper working of nodemailer
-1. Removing the main banner from every page except home page.
-1. Implement Quill custom css classes for proper rendering of blog posts.
-1. Implement categories route to show different posts depending upon category.
 
 Whenever in production mode-
 change http to https and change session's secure parameter to true

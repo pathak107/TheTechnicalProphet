@@ -1,43 +1,117 @@
 <%- include('./partials/header'); -%>
 
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
+	<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+		<% for(var i =0 ;i< posts.length; i++){ %>
+		<% if(i==0){ %>
+			<li data-target="#carouselExampleCaptions" data-slide-to="<%= i %>" class="active"></li>
+		<%}else{ %>
+			<li data-target="#carouselExampleCaptions" data-slide-to="<%= i %>"></li>
+		<%}%>
+		<% } %>
+		</ol>
 
-					<!-- single post card-->
-					<% for(var i =0 ;i< posts.length; i++){ %>
-					<div class="case">
-						<div class="row">
-							<div class="col-md-6 col-lg-6 col-xl-8 d-flex">
-								<a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>" class="img w-100 mb-3 mb-md-0"
-									style="background-image: url(uploads/<%=posts[i].imageurl%>);"></a>
-							</div>
-							<div class="col-md-6 col-lg-6 col-xl-4 d-flex">
-								<div class="text w-100 pl-md-3">
-									<span class="subheading"><%=posts[i].category%></span>
-									<h2><a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%=posts[i].title%></a>
-									</h2>
-									<ul class="media-social list-unstyled">
-										<li class="ftco-animate"><a target="_blank" href="https://www.linkedin.com/company/iste-manipal/"><span class="icon-linkedin"></span></a></li>
-										<li class="ftco-animate"><a target="_blank" href="https://www.facebook.com/istemanipal/"><span class="icon-facebook"></span></a>
-										</li>
-										<li class="ftco-animate"><a target="_blank" href="https://www.instagram.com/istemanipal/?igshid=1ubr443b0anlx"><span class="icon-instagram"></span></a>
-										</li>
-									</ul>
-									<div class="meta">
-										<p class="mb-0"><a href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%=new Date(posts[i].timestamp).toISOString().slice(0,10)%></a> | <a href="/articles/<%=posts[i]._id%>"><%=posts[i].timeToRead%> min read</a></p>
-									</div>
-								</div>
-							</div>
+		<div class="carousel-inner">
+			<% for(var i =0 ;i< posts.length; i++){ %>
+				<% if(i==0){ %>
+					<div class ="carousel-item active car" style="background-image: url('uploads/<%=posts[i].imageurl%>');">
+						<div class="col-lg-8 side-car">
+							<!-- <img src="" class="d-block w-50 car-image" alt="..."> -->
+							<h1 class="car-title"><a style="color: white; font-weight: 600;" onMouseOver="this.style.color='#ffd369'"
+								onMouseOut="this.style.color='white'" href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%= posts[i].title %></a></h1>
+							<p class="p-style" style="color:whitesmoke;"><%= posts[i].shortDescription %>.</p>	
+							<h3  class="cap-style"  style="color: rgb(180, 179, 179);">Read article by <%=posts[i].author %></h3> 
+							<a class="btn btn-color" href="/articles/single/<%=posts[i].slug%>/<%=posts[i]._id%>">Go to Article</a>
 						</div>
 					</div>
-					<%}%>
-					<!-- end of single post card -->
-					
-				</div>
-			</div>
+				<% }else{ %>
+					<div class ="carousel-item  car" style="background-image: url('uploads/<%=posts[i].imageurl%>');">
+						<div class="col-lg-8 side-car">
+							<!-- <img src="" class="d-block w-50 car-image" alt="..."> -->
+							<h1 class="car-title"><a style="color: white; font-weight: 600;" onMouseOver="this.style.color='#ffd369'"
+								onMouseOut="this.style.color='white'" href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%= posts[i].title %></a></h1>
+							<p class="p-style" style="color:whitesmoke;"><%= posts[i].shortDescription %>.</p>	
+							<h3  class="cap-style"  style="color: rgb(180, 179, 179);">Read article by <%=posts[i].author %></h3> 
+							<a class="btn btn-color" href="/articles/single/<%=posts[i].slug%>/<%=posts[i]._id%>">Go to Article</a>
+						</div>
+					</div>
+				<% } %>
+			
+			<% } %>
 		</div>
-	</section>
 
-	<%- include('./partials/footer'); -%>
+
+		<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+		  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+		  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	</div>
+	
+                <!-- end of carousel -->
+                <!-- category bar -->
+
+                <div class="container-fluid text-center my-5 d-none d-lg-block" >
+                    <div id="categoryList" class="navigate link-style">         
+                    </div>
+				</div>
+				<script>
+					axios.get('/newPost/allCategories')
+						.then(response => {
+							var cats=response.data.data;
+							for (var i = 0; i < cats.length; i++) {
+								var catAnchor = document.createElement("a");
+								catAnchor.classList= ("mx-lg-5 mx-sm-4 link-style");
+								catAnchor.href = "/articles?category="+cats[i].name
+								catAnchor.innerHTML = cats[i].name.toString();
+								document.getElementById("categoryList").appendChild(catAnchor);
+							}
+						})
+						.catch(error => {
+							console.log(error);
+						})
+				</script>
+
+				<!-- single post card-->
+				<hr class="longer-hr d-none d-lg-block">
+    <div class="container article-post my-5">
+		<h2 style="color:#ffd369 ; font-weight: 700;">Most Viewed Posts</h2>
+		<% for(var i =0 ;i< mostViewed.length; i++){ %>
+        <div class="row">
+            <div class="col-lg-4 my-2">
+                <h2><a style="color: black; font-weight: 600;" onMouseOver="this.style.color='#ffd369'"
+					onMouseOut="this.style.color='black'" href="/articles/single/<%= mostViewed[i].slug %>/<%=mostViewed[i]._id%>"><%= mostViewed[i].title %></a></h2>
+				<span><%= mostViewed[i].author %></span>
+                <br>
+				<p><%= mostViewed[i].timeToRead %> mins to read. | <%= mostViewed[i].views %> views</p>
+				
+            </div>   
+            <div class="col-lg-4 mx-3 my-2 text-justify">
+                <p><%= mostViewed[i].shortDescription %></p>
+            </div> 
+            <div class="image mx-3 my-2 col-lg-3">
+                <img width="300" height="200" src="uploads/<%=mostViewed[i].imageurl%>" alt="<%= mostViewed[i].title %>">
+            </div>  
+        </div>
+		<hr>
+		<% } %>
+
+		<form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
+            enctype="multipart/form-data">
+            <p>Subscribe to our blog and we'll keep you updated with new exciting posts.</p>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary py-3 px-5">
+            </div>
+		</form>
+		
+	</div>
+	
+</div>
+		
+<%- include('./partials/footer'); -%>
