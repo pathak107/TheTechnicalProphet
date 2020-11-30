@@ -9275,10 +9275,10 @@ border: 2px solid black;
 
 }
 .car-title{
-  font-size:60px;
+  font-size:55px;
   width: 40vw;
   color: rgb(253, 250, 250);
-  font-family: Play;
+  font-family: Poppins;
 
 
 }
@@ -9306,7 +9306,7 @@ border: 2px solid black;
   color: black;
 }
 .p-style{
-  font-size: 15px;
+  font-size: 20px;
   padding: 2% ;
   margin-top: 3%;
   text-align: justify;
@@ -9315,16 +9315,21 @@ border: 2px solid black;
 @media (max-width: 767.98px) {
 
   .car-title{
-    font-size:30px;
+    margin-top: 8%;
+    font-size:25px;
     width:92vw;
     text-align: center;
   
   
   }
+  .align-img{
+    margin-left: 3%;
+  }
   .p-style{
     padding-right: 7%;
     padding-left: 7%;
-    font-size: 12px;
+    font-size: 15px;
+    margin-top: 20%;
   }
   .side-car{
    
@@ -9400,5 +9405,12 @@ border: 2px solid black;
 
   color: var(--yellow);
   cursor: pointer;
+
+}
+.img-hover:hover{
+  -webkit-filter: grayscale(100%); /* Ch 23+, Saf 6.0+, BB 10.0+ */
+  filter: grayscale(100%); /* FF 35+ */
+}
+.img-hover{
 
 }

@@ -21,7 +21,7 @@
 								onMouseOut="this.style.color='white'" href="/articles/single/<%= posts[i].slug %>/<%=posts[i]._id%>"><%= posts[i].title %></a></h1>
 							<p class="p-style" style="color:whitesmoke;"><%= posts[i].shortDescription %>.</p>	
 							<h3  class="cap-style"  style="color: rgb(180, 179, 179);">Read article by <%=posts[i].author %></h3> 
-							<a class="btn btn-color" href="/articles/single/<%=posts[i].slug%>/<%=posts[i]._id%>">Go to Article</a>
+							<a class="btn btn-color" style="margin: auto;" href="/articles/single/<%=posts[i].slug%>/<%=posts[i]._id%>">Go to Article</a>
 						</div>
 					</div>
 				<% }else{ %>
@@ -78,7 +78,8 @@
 				<!-- single post card-->
 				<hr class="longer-hr d-none d-lg-block">
     <div class="container article-post my-5">
-		<h2 style="color:#ffd369 ; font-weight: 700;">Most Viewed Posts</h2>
+		<h2 style="color:#ffd369 ; text-align: center; font-weight: 800;" class="my-5 most-viewed">Most Viewed Posts</h2>
+		<hr>
 		<% for(var i =0 ;i< mostViewed.length; i++){ %>
         <div class="row">
             <div class="col-lg-4 my-2">
@@ -93,7 +94,7 @@
                 <p><%= mostViewed[i].shortDescription %></p>
             </div> 
             <div class="image mx-3 my-2 col-lg-3">
-                <img width="300" height="200" src="uploads/<%=mostViewed[i].imageurl%>" alt="<%= mostViewed[i].title %>">
+                <img class="img-hover" width="300" height="200" src="uploads/<%=mostViewed[i].imageurl%>" alt="<%= mostViewed[i].title %>">
             </div>  
         </div>
 		<hr>
