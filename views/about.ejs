@@ -75,52 +75,109 @@
   </div>
 </section>
 
-<section class="ftco-section testimony-section">
-  <div class="container">
-    <div class="row justify-content-center mb-5">
-      <div class="col-md-7 text-center heading-section ftco-animate">
-        <span class="subheading">Editors</span>
-        <h2 class="mb-4">Team Members</h2>
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-4 text-center heading-section ftco-animate">
+    <h2 class="h2_header">Editor</h2>
+    <div class="our-team">
+      <div class="picture">
+        <img class="img-fluid" src="images/anupriya.png">
       </div>
+      <div class="team-content">
+        <h3 class="name">Anupriya Singpuri</h3>
+        <h4 class="title">Content Head</h4>
+        <p>Apart from being a tech enthusiast and an avid reader, I am a proponent of all things of
+          a linguistic nature. Literature, programming, archaeology, genetics, you name it! </p>
+      </div>
+      <ul class="social">
+        <li><a class="fa fa-linkedin"></a></li>
+      </ul>
     </div>
-    <div class="row ftco-animate">
-      <div class="col-md-12">
-        <div class="carousel-testimony owl-carousel ftco-owl">
-          <div class="item">
-            <div class="testimony-wrap py-4">
-              <div class="text">
-                <div class="d-flex align-items-center">
-                  <div class="user-img" style="background-image: url(images/shubham.jpg)"></div>
-                  <div class="pl-3">
-                    <p class="name">SHUBHAM PATHAK</p>
-                    <span class="position">WEB DEV AND PROJECT HEAD</span>
-                  </div>
-                </div>
-                <p class="mb-4">Web dev and app dev are my main interests and I'm always curious about new technologies.
-                  Responsible for development and maintenance of the website. Web dev head at ISTE Manipal.</p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="testimony-wrap py-4">
-              <div class="text">
-                <div class="d-flex align-items-center">
-                  <div class="user-img" style="background-image: url(images/anupriya.png)"></div>
-                  <div class="pl-3">
-                    <p class="name">ANUPRIYA</p>
-                    <span class="position">CONTENT HEAD</span>
-                  </div>
-                </div>
-                <p class="mb-4">Apart from being a tech enthusiast and an avid reader, I am a proponent of all things of
-                  a linguistic nature. Literature, programming, archaeology, genetics, you name it!</p>
-              </div>
-            </div>
-          </div>
+    <h2 class="h2_header my-5">Developers</h2>
+  </div>
+  <br>
+</div>
+
+<div class="container my-3">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="our-team custom-height">
+        <div class="picture">
+          <img class="img-fluid" src="images/shubham.jpg">
+        </div>
+        <div class="team-content">
+          <a href="https://www.linkedin.com/in/shubham-pathak-7093a11b9/"><h3 class="name">Shubham Pathak</h3></a> 
+          <h4 class="title">Web Developer</h4>
+          <p>My main interest includes web development and app developement. I am always curious about new
+            technologies. Being the head of web dev at ISTE, Manipal, I am responsible for the
+            development and maintaince of the websites.
+          </p>
         </div>
       </div>
     </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 ">
+      <div class="our-team custom-height">
+        <div class="picture">
+          <img class="img-fluid" src="images/akhil.jpg">
+        </div>
+        <div class="team-content">
+          <a href="https://www.linkedin.com/in/akhil-kala-b185131b0/"><h3 class="name">Akhil Kala</h3></a>
+          <h4 class="title">Web Developer</h4>
+          <p>To build eye-catching user experiences is my goal. From making the UI in the front-end to
+            coding the back-end for it, I enjoy it all.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="our-team custom-height">
+        <div class="picture">
+          <img class="img-fluid" src="images/Insha-1.jpeg">
+        </div>
+        <div class="team-content">
+          <a href="https://www.linkedin.com/in/insha-manowar-82a3101ab/"><h3 class="name">Insha Manowar</h3></a>
+          <h4 class="title">Web Developer</h4>
+          <p>I aim to create an optimal website that is intuitive, seamless, simple at the same time.
+            Every new project thrills me due to the potential of being able to create and learn
+            something new each time! </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="our-team custom-height">
+        <div class="picture">
+          <img class="img-fluid" src="images/varshil.jpg">
+        </div>
+        <div class="team-content">
+          <a href="https://www.linkedin.com/in/varshil-shah-a5ab161a4/"><h3 class="name">Varshil Shah</h3></a>
+          <h4 class="title">Web Developer</h4>
+          <p>
+            I am dedicated towards perfecting my craft by learning from more seasoned developers,
+            remaining humble, and continuously making strides to learn all that I can about development.
+          </p>
+        </div>
+        
+      </div>
+    </div>
   </div>
-</section>
+</div>
+
+<div class="container my-5">
+<h1 class="text-center my-5">Authors</h1>
+
+<div class="row">
+  <br>
+
+  <% for(var i=0; i< authors.length; i++)  { %>
+    <div class="col-lg-3">
+      <ul>
+        <strong><li class="auth"> <%= authors[i].author %></li></strong>
+      </ul>
+    </div>
+  <% } %>
+  
+ 
+ 
+</div>
+</div>
 
 
 <%- include('./partials/footer'); -%>

@@ -67,6 +67,7 @@ const updatePostController=require('./controllers/updatePostController');
 
 
 
+
 //handling routes
 app.use('/', rootController)
 app.use('/auth', authController);
@@ -75,9 +76,15 @@ app.use('/update',updatePostController);
 app.use('/contact', contactController);
 app.use('/newPost', newPostController);
 app.use('/mobile', mobileController)
+
 // about route
+const blogPosts = require('./models/blogPosts');
 app.get('/about', function (req, res) {
-  res.render('about', { isLoggedIn: req.session.isLoggedIn,seo:seo });
+  blogPosts.find((err,authors)=>{
+    if(err){ console.log(err); }
+    res.render('about', { isLoggedIn: req.session.isLoggedIn,seo:seo, authors:authors });
+  }).select('author')
+  
 });
 
 //404 page

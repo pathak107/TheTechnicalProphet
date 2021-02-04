@@ -1,219 +1,257 @@
 <%- include('./partials/header'); -%>
 
-<div class="jumbotron  container-fluid" style="background-color: #0cbaba;
+  <div class="jumbotron  container-fluid" style="background-color: #0cbaba;
   background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
   ;
   ">
-      <h1 class=" my-5 single-article-font text-center" style="color: white;"><%= post.title %></h1>
-</div>
+    <h1 class=" my-5 single-article-font text-center" style="color: white;">
+      <%= post.title %>
+    </h1>
+  </div>
 
-<section class="ftco-section ftco-degree-bg">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 ftco-animate">
-        <p class="mb-5">
-          <img src="uploads/<%=post.imageurl%>" alt="Post Image" class="img-fluid">
-        </p>
-        <h2 class="mb-3"><%=post.title%></h2>
-        <div>
-          <%-post.body%>
-        </div>
-
-
-        <!-- Tags and keywords -->
-        <div class="tag-widget post-tag-container mb-5 mt-5">
-          <div class="tagcloud">
-            <% for(var i=0;i< post.tags.length ; i++) {%>
-            <a href="#" class="tag-cloud-link"><%=post.tags[i]%></a>
-            <%}%>
-              </div>
-            </div>
-            
-            <div class="about-author d-flex p-4 bg-light">
-              <div class="desc">
-                <h3>Author</h3>
-                <h3><%=post.author%></h3>
-            <p><%=post.aboutAuthor%></p>
+  <section class="ftco-section ftco-degree-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 ftco-animate">
+          <p class="mb-5">
+            <img src="uploads/<%=post.imageurl%>" alt="Post Image" class="img-fluid">
+          </p>
+          <h2 class="mb-3">
+            <%=post.title%>
+          </h2>
+          <div id="postBody">
+            <%-post.body%>
           </div>
-        </div>
 
 
-        <!-- delete button for post -->
-        <%if(isLoggedIn==true){%>
-        <div style="margin-bottom: 2rem;" id="deleteButton" class="btn btn-primary py-3 px-5">Delete Post</div>
-        <script>
-          document.getElementById("deleteButton").addEventListener("click", () => {
-            $.ajax({
-              url: '/articles/<%=post._id%>',
-              type: 'DELETE',
-              success: function (result) {
-                console.log(result);
-                $("#deleteButton").text(result.message);
-                if (result.message == "success") {
-                  window.location.href = "/";
-                }
-
-              }
-            });
-          });
-        </script>
-        <%}%>
-
-        <!-- Edit post button -->
-        <%if(isLoggedIn==true){%>
-          <button style="margin-bottom: 2rem;" class="btn btn-primary py-3 px-5" onclick="window.location.href='/update/<%=post._id%>'">Edit Post</button>
-        <%}%>
-
-            <!-- recent posts -->
-            <h1>Related Posts</h1>
-            <% for(var i=0;i< recentPosts.length;i++){ %>
-        <div class="block-21 mb-4 d-flex">
-          <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
-          <div class="text">
-            <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
-            <div class="meta">
-              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
-                  <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
-              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-person"></span> Admin</a></div>
+          <!-- Tags and keywords -->
+          <div class="tag-widget post-tag-container mb-5 mt-5">
+            <div class="tagcloud">
+              <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link">
+                  <%=post.tags[i]%>
+                </a>
+                <%}%>
             </div>
           </div>
-        </div>
-        <%}%>
 
-
-            <div class="pt-5 mt-5">
-              <h3 class="mb-5"><%=comments.length%> Comments</h3>
-        <ul class="comment-list">
-
-          <% for(var i =0;i< comments.length; i++) { %>
-          <li class="comment">
-            <div class="vcard bio">
-              <img src="images/user.png" alt="Image placeholder">
+          <div class="about-author d-flex p-4 bg-light">
+            <div class="desc">
+              <h3>Author</h3>
+              <h3>
+                <%=post.author%>
+              </h3>
+              <p>
+                <%=post.aboutAuthor%>
+              </p>
             </div>
-            <div class="comment-body">
-              <h3><%=comments[i].name%></h3>
-              <p><%=comments[i].email%></p>
-              <div class="meta mb-3"><%=new Date(comments[i].timestamp).toUTCString().slice(0,16)%> at
-                <%=new Date(comments[i].timestamp).toUTCString().slice(17,22)%>hrs</div>
-              <p><%=comments[i].comment%></p>
+          </div>
 
-              <!-- delete comment -->
-              <%if(isLoggedIn==true){%>
-              <div id="deleteButtonComment" class="btn btn-primary py-3 px-5">Delete Comment</div>
-              <script>
-                document.getElementById("deleteButtonComment").addEventListener("click", () => {
-                  $.ajax({
-                    url: '/articles/comment/<%=comments[i]._id%>',
-                    type: 'DELETE',
-                    success: function (result) {
-                      console.log(result);
-                      $("#deleteButtonComment").text(result.message);
-                      if (result.message == "success") {
-                        window.location.href = "/articles/single/<%= post.slug %>/<%=post._id%>";
-                      }
 
+          <!-- delete button for post -->
+          <%if(isLoggedIn==true){%>
+            <div style="margin-bottom: 2rem;" id="deleteButton" class="btn btn-primary py-3 px-5">Delete Post</div>
+            <script>
+              document.getElementById("deleteButton").addEventListener("click", () => {
+                $.ajax({
+                  url: '/articles/<%=post._id%>',
+                  type: 'DELETE',
+                  success: function (result) {
+                    console.log(result);
+                    $("#deleteButton").text(result.message);
+                    if (result.message == "success") {
+                      window.location.href = "/";
                     }
-                  });
-                });
-              </script>
-              <%}%>
 
-                    
-                  </div>
-                </li>
+                  }
+                });
+              });
+            </script>
+            <%}%>
+
+              <!-- Edit post button -->
+              <%if(isLoggedIn==true){%>
+                <button style="margin-bottom: 2rem;" class="btn btn-primary py-3 px-5"
+                  onclick="window.location.href='/update/<%=post._id%>'">Edit Post</button>
                 <%}%>
 
-        </ul>
-        <!-- END comment-list -->
+                  <!-- recent posts -->
+                  <h1>Related Posts</h1>
+                  <% for(var i=0;i< recentPosts.length;i++){ %>
+                    <div class="block-21 mb-4 d-flex">
+                      <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
+                      <div class="text">
+                        <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>">
+                            <%=recentPosts[i].title%>
+                          </a></h3>
+                        <div class="meta">
+                          <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span
+                                class="icon-calendar"></span>
+                              <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%>
+                            </a></div>
+                          <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span
+                                class="icon-person"></span> Admin</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <%}%>
 
-        <div class="comment-form-wrap pt-5">
-          <h3 class="mb-5">Leave a comment</h3>
-          <form action="/articles/single/<%= post.slug %>/<%=post._id%>" method="POST" class="p-5 bg-light" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="name">Name *</label>
-              <input type="text" class="form-control" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email *</label>
-              <input type="email" class="form-control" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="Comment">Comment *</label>
-              <textarea name="comment" id="comment" cols="30" rows="10" class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-              <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
-            </div>
 
-          </form>
-        </div>
-      </div>
+                      <div class="pt-5 mt-5">
+                        <h3 class="mb-5">
+                          <%=comments.length%> Comments
+                        </h3>
+                        <ul class="comment-list">
 
-    </div> <!-- .col-md-8 -->
-    <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
+                          <% for(var i=0;i< comments.length; i++) { %>
+                            <li class="comment">
+                              <div class="vcard bio">
+                                <img src="images/user.png" alt="Image placeholder">
+                              </div>
+                              <div class="comment-body">
+                                <h3>
+                                  <%=comments[i].name%>
+                                </h3>
+                                <p>
+                                  <%=comments[i].email%>
+                                </p>
+                                <div class="meta mb-3">
+                                  <%=new Date(comments[i].timestamp).toUTCString().slice(0,16)%> at
+                                    <%=new Date(comments[i].timestamp).toUTCString().slice(17,22)%>hrs
+                                </div>
+                                <p>
+                                  <%=comments[i].comment%>
+                                </p>
 
-      <div class="sidebar-box ftco-animate">
-        <h3>Recent Posts</h3>
+                                <!-- delete comment -->
+                                <%if(isLoggedIn==true){%>
+                                  <div id="deleteButtonComment" class="btn btn-primary py-3 px-5">Delete Comment</div>
+                                  <script>
+                                    document.getElementById("deleteButtonComment").addEventListener("click", () => {
+                                      $.ajax({
+                                        url: '/articles/comment/<%=comments[i]._id%>',
+                                        type: 'DELETE',
+                                        success: function (result) {
+                                          console.log(result);
+                                          $("#deleteButtonComment").text(result.message);
+                                          if (result.message == "success") {
+                                            window.location.href = "/articles/single/<%= post.slug %>/<%=post._id%>";
+                                          }
 
-        <% for(var i=0;i< recentPosts.length;i++){ %>
-        <div class="block-21 mb-4 d-flex">
-          <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
-          <div class="text">
-            <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><%=recentPosts[i].title%></a></h3>
-            <div class="meta">
-              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span class="icon-calendar"></span>
-                  <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%></a></div>
-              <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span><%=recentPosts[i].timeToRead %> mins read</span> </a></div>
+                                        }
+                                      });
+                                    });
+                                  </script>
+                                  <%}%>
+
+
+                              </div>
+                            </li>
+                            <%}%>
+
+                        </ul>
+                        <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                          <h3 class="mb-5">Leave a comment</h3>
+                          <form action="/articles/single/<%= post.slug %>/<%=post._id%>" method="POST"
+                            class="p-5 bg-light" enctype="multipart/form-data">
+                            <div class="form-group">
+                              <label for="name">Name *</label>
+                              <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="email">Email *</label>
+                              <input type="email" class="form-control" name="email" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="Comment">Comment *</label>
+                              <textarea name="comment" id="comment" cols="30" rows="10" class="form-control"
+                                required></textarea>
+                            </div>
+                            <div class="form-group">
+                              <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
+                            </div>
+
+                          </form>
+                        </div>
+                      </div>
+
+        </div> <!-- .col-md-8 -->
+        <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
+
+          <div class="sidebar-box ftco-animate">
+            <h3>Recent Posts</h3>
+
+            <% for(var i=0;i< recentPosts.length;i++){ %>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>">
+                      <%=recentPosts[i].title%>
+                    </a></h3>
+                  <div class="meta">
+                    <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span
+                          class="icon-calendar"></span>
+                        <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%>
+                      </a></div>
+                    <div><a href="/articles/single/<%=recentPosts[i].slug%>/<%=recentPosts[i]._id%>"><span>
+                          <%=recentPosts[i].timeToRead %> mins read
+                        </span> </a></div>
+                  </div>
+                </div>
+              </div>
+              <%}%>
+
+          </div>
+
+          <div class="sidebar-box ftco-animate">
+            <h3>Tag Cloud</h3>
+            <div class="tagcloud">
+              <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link">
+                  <%=post.tags[i]%>
+                </a>
+                <%}%>
             </div>
           </div>
-        </div>
-        <%}%>
 
-            </div>
-
-            <div class="sidebar-box ftco-animate">
-              <h3>Tag Cloud</h3>
-              <div class="tagcloud">
-                <% for(var i=0;i< post.tags.length ; i++) {%>
-        <a href="#" class="tag-cloud-link"><%=post.tags[i]%></a>
-        <%}%>
-              </div>
-            </div>
-
-            <!-- advertisements -->
-            <!-- <div class="ads my-4">
+          <!-- advertisements -->
+          <!-- <div class="ads my-4">
               <img src="https://josephmuciraexclusives.com/wp-content/uploads/2020/04/Blogads.png" width="240" alt="ad">
             </div>
             <div class="ads my-4">
               <img src="https://i.pinimg.com/originals/7d/23/5a/7d235a1ef6293769131c8511fb4dab33.jpg" width="240" alt="ad">
             </div>  -->
-            <!-- end of advertisements -->
+          <!-- end of advertisements -->
 
-        <form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
+          <form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
             enctype="multipart/form-data">
             <p>Subscribe to our blog and we'll keep you updated with new exciting posts.</p>
             <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
+              <input type="email" name="email" class="form-control" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary py-3 px-5">
+              <input type="submit" class="btn btn-primary py-3 px-5">
             </div>
-        </form>
+          </form>
 
-            <div class="sidebar-box ftco-animate">
-              <div class="categories">
-                <h3>Categories</h3>
-                <% for(var i=0; i< cats.length; i++) { %>
-                  <li><a href="/articles?category=<%=cats[i].name%>"><%=cats[i].name%><span class="ion-ios-arrow-forward"></span></a></li>
+          <div class="sidebar-box ftco-animate">
+            <div class="categories">
+              <h3>Categories</h3>
+              <% for(var i=0; i< cats.length; i++) { %>
+                <li><a href="/articles?category=<%=cats[i].name%>">
+                    <%=cats[i].name%><span class="ion-ios-arrow-forward"></span>
+                  </a></li>
                 <%}%>
-              </div>
             </div>
-            
-            
           </div>
 
-        </div>
-      </div>
-    </section> <!-- .section -->
 
-    <%- include('./partials/footer'); -%>
+        </div>
+
+      </div>
+    </div>
+  </section> <!-- .section -->
+
+  <%- include('./partials/footer'); -%>
