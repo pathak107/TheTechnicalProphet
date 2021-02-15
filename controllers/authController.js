@@ -2,7 +2,10 @@ const express = require('express')
 var router = express.Router()
 router.use(express.static('public'));
 
-const seo=require('./seoMeta')
+const seo = require('./seoMeta')
+
+const { encrypt, decrypt } = require('./encrypter');
+const mailer= require('./nodemailer');
 
 //Multer upload
 const upload = require('./multerUpload');
@@ -33,11 +36,38 @@ router.get('/mailSubscription', upload.none(), (req, res) => {
     })
 })
 router.post('/mailSubscription', upload.none(), (req, res) => {
-    const email=new Email({
-        email:req.body.email
+    const code = encrypt(req.body.email);
+    const mailOptions = {
+        from: "The Technical Prophet <contactus@istemanipal.com>", // sender address
+        to: req.body.email,
+        subject: `The Technical Prophet | Email verification`, // Subject line
+        html: `<h2>The Technical Prophet wants to verify your email id. Please click the link below to verify your email.</h2>
+            <a href="https://blog.istemanipal.com/auth/mailVerification?code=${code}">Verify your email.</a>`, // plain text body
+    };
+    mailer.sendMail(mailOptions, (err) => {
+        if (err) {
+            return res.render('mailSubscription', {
+                isLoggedIn: req.session.isLoggedIn,
+                seo: seo,
+                message: "Some error occured in sending the email. Please check if it's a valid email or not."
+            })
+        }
+        return res.render('mailSubscription', {
+            isLoggedIn: req.session.isLoggedIn,
+            seo: seo,
+            message: `We have sent you a verification email. Please click on the link in email to verify.`
+        })
     })
-    email.save((err,newEmail)=>{
-        if(err){
+
+})
+
+router.get('/mailVerification', (req, res) => {
+    var emailID= decrypt(req.query.code);
+    const email = new Email({
+        email: emailID,
+    })
+    email.save((err, newEmail) => {
+        if (err) {
             return res.render('mailSubscription', {
                 isLoggedIn: req.session.isLoggedIn,
                 seo: seo,
@@ -47,10 +77,9 @@ router.post('/mailSubscription', upload.none(), (req, res) => {
         return res.render('mailSubscription', {
             isLoggedIn: req.session.isLoggedIn,
             seo: seo,
-            message: `Thanks. We'll keep you posted at ${newEmail.email}`
+            message: `Thanks for verification. We'll keep you posted at ${newEmail.email}`
         })
     })
-    
 })
 
 router.get('/logout', (req, res) => {

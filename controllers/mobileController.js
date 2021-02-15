@@ -19,7 +19,7 @@ router.get('/blogPosts', function (req, res) {
             .select('-body')
     }
     else {
-        const POSTS_PER_PAGE = 5;
+        const POSTS_PER_PAGE = +req.query.size||5;
         let page = +req.query.page || 1;
         blogPosts.find((err, posts) => {
             if (err) console.log(err);
