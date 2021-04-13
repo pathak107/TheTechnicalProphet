@@ -113,7 +113,7 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
 
 
 })
-router.post('/single/:slug/:postID', upload.none(), (req, res) => {
+router.post(['/single/:slug/:postID','/single//:postID'], upload.none(), (req, res) => {
     var slug= req.params.slug
     //for posting comments
     let post_id = req.params.postID;
