@@ -114,7 +114,7 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
 
 })
 router.post(['/single/:slug/:postID','/single//:postID'], upload.none(), (req, res) => {
-    var slug= req.params.slug
+    var slug= (req.params.slug==undefined)?"":req.params.slug==undefined;
     //for posting comments
     let post_id = req.params.postID;
     var newComment = new comment({
