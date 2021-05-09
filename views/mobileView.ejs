@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="css/animate.css">
+
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/owl.theme.default.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+
+<link rel="stylesheet" href="css/aos.css">
+
+<link rel="stylesheet" href="css/ionicons.min.css">
+
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/icomoon.css">
+<link rel="stylesheet" href="css/style.css">
+
+  <div class="jumbotron  container-fluid" style="background-color: #0cbaba;
+  background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
+  ;
+  ">
+    <h1 class=" my-5 single-article-font text-center" style="color: white;">
+      <%= post.title %>
+    </h1>
+  </div>
+
+  <section class="ftco-section ftco-degree-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 ftco-animate">
+          <p class="mb-5">
+            <img src="uploads/<%=post.imageurl%>" alt="Post Image" class="img-fluid">
+          </p>
+          <h2 class="mb-3">
+            <%=post.title%>
+          </h2>
+          <div id="postBody">
+            <%-post.body%>
+          </div>
+
+
+          <!-- Tags and keywords -->
+          <div class="tag-widget post-tag-container mb-5 mt-5">
+            <div class="tagcloud">
+              <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link">
+                  <%=post.tags[i]%>
+                </a>
+                <%}%>
+            </div>
+          </div>
+
+          <div class="about-author d-flex p-4 bg-light">
+            <div class="desc">
+              <h3>Author</h3>
+              <h3>
+                <%=post.author%>
+              </h3>
+              <p>
+                <%=post.aboutAuthor%>
+              </p>
+            </div>
+          </div>
+
+
+          <h4>Recent Posts</h4>
+
+            <% for(var i=0;i< recentPosts.length;i++){ %>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(uploads/<%=recentPosts[i].imageurl%>);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="/mobile/single/<%=recentPosts[i]._id%>">
+                      <%=recentPosts[i].title%>
+                    </a></h3>
+                  <div class="meta">
+                    <div><a href="/mobile/single/<%=recentPosts[i]._id%>"><span
+                          class="icon-calendar"></span>
+                        <%=new Date(recentPosts[i].timestamp).toUTCString().slice(5,16)%>
+                      </a></div>
+                    <div><a href="/mobile/single/<%=recentPosts[i]._id%>"><span>
+                          <%=recentPosts[i].timeToRead %> mins read
+                        </span> </a></div>
+                  </div>
+                </div>
+              </div>
+              <%}%>
+
+
+                      <div class="pt-5 mt-5">
+                        <h3 class="mb-5">
+                          <%=comments.length%> Comments
+                        </h3>
+                        <ul class="comment-list">
+
+                          <% for(var i=0;i< comments.length; i++) { %>
+                            <li class="comment">
+                              <div class="vcard bio">
+                                <img src="images/user.png" alt="Image placeholder">
+                              </div>
+                              <div class="comment-body">
+                                <h3>
+                                  <%=comments[i].name%>
+                                </h3>
+                                <p>
+                                  <%=comments[i].email%>
+                                </p>
+                                <div class="meta mb-3">
+                                  <%=new Date(comments[i].timestamp).toUTCString().slice(0,16)%> at
+                                    <%=new Date(comments[i].timestamp).toUTCString().slice(17,22)%>hrs
+                                </div>
+                                <p>
+                                  <%=comments[i].comment%>
+                                </p>
+                              </div>
+                            </li>
+                            <%}%>
+
+                        </ul>
+                        <!-- END comment-list -->
+
+                      </div>
+
+        </div> <!-- .col-md-8 -->
+        <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
+
+          <div class="sidebar-box ftco-animate">
+            
+          </div>
+
+          <div class="sidebar-box ftco-animate">
+            <h3>Tag Cloud</h3>
+            <div class="tagcloud">
+              <% for(var i=0;i< post.tags.length ; i++) {%>
+                <a href="#" class="tag-cloud-link">
+                  <%=post.tags[i]%>
+                </a>
+                <%}%>
+            </div>
+          </div>
+
+          <form id="myform" action="/auth/mailSubscription" method="POST" class="bg-light p-4 p-md-5 contact-form"
+            enctype="multipart/form-data">
+            <p>Subscribe to our blog and we'll keep you updated with new exciting posts.</p>
+            <div class="form-group">
+              <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary py-3 px-5">
+            </div>
+          </form>
+
+
+        </div>
+
+      </div>
+    </div>
+  </section> <!-- .section -->
+
+  <%- include('./partials/footer'); -%>
