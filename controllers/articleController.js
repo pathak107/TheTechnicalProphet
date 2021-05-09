@@ -5,8 +5,6 @@ const blogPosts = require('../models/blogPosts')
 const comment = require('../models/comment')
 const mongoose= require('mongoose')
 
-//seo
-const seo = require('./seoMeta');
 
 //Serving static files
 router.use(express.static('public'));
@@ -83,11 +81,12 @@ router.get(['/single/:slug/:postID','/single//:postID'], function (req, res) {
                 if (err) console.log(err);
 
                 //setting the seo data
+                let seo={};
                 seo.image = "https://blog.istemanipal.com/mobile/" + post.imageurl;
                 seo.description = post.shortDescription;
                 seo.siteDescription = post.shortDescription;
                 seo.title = post.title;
-                seo.url = "https://blog.istemanipal.com/articles/" + post._id;
+                seo.url = "https://blog.istemanipal.com/articles/single//" + post._id;
 
                 var cats= await Category.find()
 

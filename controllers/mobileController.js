@@ -59,8 +59,16 @@ router.get('/single/:postID',(req, res)=> {
             blogPosts.find(async (err, recentPosts) =>{
                 if (err) console.log(err);
 
+                //setting the seo data
+                let seo={}
+                seo.image = "https://blog.istemanipal.com/mobile/" + post.imageurl;
+                seo.description = post.shortDescription;
+                seo.siteDescription = post.shortDescription;
+                seo.title = post.title;
+                seo.url = "https://blog.istemanipal.com/articles/single//" + post._id;
                 //finally rendering the article page
                 return res.render('mobileView', {
+                    seo:seo,
                     post: post,
                     comments: comments,
                     recentPosts: recentPosts,
