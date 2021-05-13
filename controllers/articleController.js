@@ -3,7 +3,7 @@ var router = express.Router()
 const fs = require('fs');
 const blogPosts = require('../models/blogPosts')
 const comment = require('../models/comment')
-const mongoose= require('mongoose')
+const seoDefault = require('./seoMeta');
 
 
 //Serving static files
@@ -36,7 +36,7 @@ router.get('/', async function (req, res) {
                 {
                     isLoggedIn: req.session.isLoggedIn,
                     posts: posts,
-                    seo: seo,
+                    seo: seoDefault,
                     currentPage:page,
                     hasNextPage:page*POSTS_PER_PAGE<totalArticles,
                     nextPage:page+1,

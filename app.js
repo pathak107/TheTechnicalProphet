@@ -11,21 +11,23 @@ const seo=require('./controllers/seoMeta');
 const fs=require('fs');
 var session = require('express-session')
 // const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const mongoDBStore = require('connect-mongodb-session')(session);
-var store = new mongoDBStore({
-  uri: process.env.MONGO_URL,
-  collection: 'sessions'
-})
+
 
 const privateKey= fs.readFileSync('blog-istemanipal.com.key');
 const certificate = fs.readFileSync('blog-istemanipal.com.pem')
 
 
 //Serving Static files
-app.use(express.static('public'));
+app.use(express.static('public', {maxage:'8h'}));
 //setting bodyparser
 // app.use(bodyParser.urlencoded({ extended: true }));
+
+const mongoose = require('mongoose');
+const mongoDBStore = require('connect-mongodb-session')(session);
+var store = new mongoDBStore({
+  uri: process.env.MONGO_URL,
+  collection: 'sessions'
+})
 
 //Ejs initialization
 app.set('view engine', 'ejs');
