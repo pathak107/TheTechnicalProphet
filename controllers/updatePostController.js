@@ -1,6 +1,6 @@
 const express = require('express')
 const blogpost = require('../models/blogPosts');
-
+const fs=require('fs');
 
 const seo = require('./seoMeta');
 
@@ -9,8 +9,6 @@ router.use(express.static('public'));
 
 //Multer upload
 const upload = require('./multerUpload');
-
-const Category = require('../models/category');
 
 //newPost
 router.get('/:id', (req, res) => {
