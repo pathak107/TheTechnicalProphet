@@ -18,7 +18,7 @@ const certificate = fs.readFileSync('blog-istemanipal.com.pem')
 
 
 //Serving Static files
-app.use(express.static('public', {maxage:'8h'}));
+app.use(express.static('public'));
 //setting bodyparser
 // app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -91,7 +91,7 @@ app.get('/about', function (req, res) {
 
 //404 page
 app.use((req, res) => {
-  res.send('404 error');
+  res.send('<h2>Technical Prophet: 404 Error!</h2><h4>Oops! Looks like the page you were trying to access does not exist.</h4>');
 })
 
 
