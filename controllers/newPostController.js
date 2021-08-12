@@ -3,6 +3,13 @@ const blogpost = require('../models/blogPosts');
 const Email = require('../models/emailList');
 const mailer = require('./nodemailer')
 
+// Html Sanitizer
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
+
 const seo = require('./seoMeta');
 
 const sgMail = require('@sendgrid/mail');
@@ -35,7 +42,7 @@ router.post('/', upload.single('img'), (req, res) => {
     var tags = (req.body.tags).split(',');
     var post = new blogpost({
         title: req.body.title,
-        body: req.body.postBody,
+        body: DOMPurify.sanitize(req.body.postBody),
         timeToRead: req.body.timeToRead,
         category: req.body.category,
         author: req.body.author,

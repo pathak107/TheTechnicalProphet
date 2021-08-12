@@ -2,6 +2,12 @@ const express = require('express')
 const blogpost = require('../models/blogPosts');
 const fs=require('fs');
 
+// Html Sanitizer
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
 const seo = require('./seoMeta');
 
 var router = express.Router()
@@ -40,7 +46,7 @@ router.post('/:id', upload.single('img'), (req, res) => {
         //making tags array
         var tags = (req.body.tags).split(','); 
         post.title= req.body.title,
-        post.body=req.body.postBody,
+        post.body=DOMPurify.sanitize(req.body.postBody),
         post.timeToRead=req.body.timeToRead,
         post.category= req.body.category,
         post.author= req.body.author,
