@@ -9,5 +9,8 @@ var storage = multer.diskStorage({
     cb(null, new Date().getTime()+"-"+file.originalname);
   }
 })
-var upload = multer({ storage: storage })
+var upload = multer({ 
+  storage: storage,
+  limits: { fieldSize: 25 * 1024 * 1024 } 
+})
 module.exports=upload;
